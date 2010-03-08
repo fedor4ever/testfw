@@ -1,0 +1,130 @@
+/*------------------------------------------------------------------
+ -
+ * Software Name : UserEmulator
+ * Version       : v4.2.1309
+ * 
+ * Copyright (c) 2009 France Telecom. All rights reserved.
+ * This software is distributed under the License 
+ * "Eclipse Public License - v 1.0" the text of which is available
+ * at the URL "http://www.eclipse.org/legal/epl-v10.html".
+ *
+ * Initial Contributors:
+ * France Telecom 
+ *
+ * Contributors:
+ *------------------------------------------------------------------
+ -
+ * File Name: UserEmulator.mmp
+ * 
+ * Created: 13/08/2009
+ * Author(s): Marcell Kiss, Reshma Sandeep Das
+ *   
+ * Description:
+ * This is the project specification file for UserEmulator.
+ *------------------------------------------------------------------
+ -
+ *
+ */
+
+#if defined(__S60_)
+#include <platform_paths.hrh>
+#endif
+
+TARGET			UserEmulator_0x2001C3AF.exe
+TARGETTYPE		exe
+UID		  		0x100039CE 0x2001C3AF
+
+SOURCEPATH		..\src
+SOURCE			UserEmulator.cpp
+SOURCE			UserEmulatorApplication.cpp
+SOURCE			UserEmulatorAppUi.cpp
+SOURCE			UserEmulatorDocument.cpp
+SOURCE          XmlHandler.cpp 
+SOURCE          Utils.cpp
+SOURCE          ScanFolders.cpp
+SOURCE          DelayTimer.cpp
+SOURCE          Settings.cpp 
+SOURCE          SettingsDialog.cpp 
+SOURCE          UserEmulatorScriptsView.cpp 
+SOURCE          ThreadNotifier.cpp 
+SOURCE          GlobalCapturer.cpp
+SOURCE          Logger.cpp
+SOURCE 			RandomTest.cpp
+SOURCE 			ImageCapture.cpp
+SOURCE			CameraAppTimer.cpp
+SOURCE 			NotifyFileChange.cpp
+
+
+USERINCLUDE	   ..\inc
+USERINCLUDE    ..\help
+USERINCLUDE    ..\Engine\WSClient\inc
+
+SOURCEPATH		..\data
+
+START RESOURCE	UserEmulator.rss
+HEADER
+TARGET UserEmulator_0x2001C3AF
+TARGETPATH resource\apps
+END //RESOURCE
+
+START RESOURCE	UserEmulator_reg.rss
+TARGET UserEmulator_0x2001C3AF_reg
+TARGETPATH 	  \private\10003a3f\import\apps
+END //RESOURCE
+
+#if defined(__S60_)
+APP_LAYER_SYSTEMINCLUDE
+#else
+SYSTEMINCLUDE	 \epoc32\include
+#endif
+
+LIBRARY		   euser.lib
+LIBRARY		   apparc.lib
+LIBRARY		   cone.lib
+LIBRARY		   eikcore.lib
+LIBRARY		   avkon.lib
+LIBRARY		   commonengine.lib
+LIBRARY		   efsrv.lib
+LIBRARY		   estor.lib 
+LIBRARY		   etel3rdparty.lib 
+LIBRARY		   hal.lib
+LIBRARY        aknnotify.lib 
+LIBRARY		   ws32.lib 
+LIBRARY		   eikcoctl.lib 
+LIBRARY		   apgrfx.lib 
+LIBRARY		   eikctl.lib 
+LIBRARY		   egul.lib 
+LIBRARY		   aknicon.lib 
+LIBRARY        hlplch.lib 
+LIBRARY		   charconv.lib 
+LIBRARY		   XmlFramework.lib 
+LIBRARY		   bafl.lib 
+LIBRARY		   eikdlg.lib 
+LIBRARY		   platformenv.lib
+LIBRARY        aknskins.lib 
+LIBRARY		   aknskinsrv.lib 
+LIBRARY		   aknswallpaperutils.lib
+LIBRARY		   imageconversion.lib 
+LIBRARY		   fbscli.lib 
+LIBRARY        c32.lib
+LIBRARY        animation_client_0x20025CA9.lib
+
+LANG SC
+
+VENDORID	  	0
+SECUREID		0x2001C3AF
+EPOCSTACKSIZE	0x5000
+CAPABILITY 		ReadDeviceData WriteDeviceData SwEvent LocalServices PowerMgmt ProtServ
+
+
+START BITMAP    Icons.mbm
+HEADER
+TARGETPATH      \system\apps\UserEmulator
+SOURCEPATH      ..\bitmaps
+SOURCE          C12 pass.bmp
+SOURCE          C12 pass_mask.bmp
+SOURCE          C12 fail.bmp
+SOURCE			C12 fail_mask.bmp
+SOURCE			C12 Cancel.bmp
+SOURCE			C12 Cancel_mask.bmp
+END

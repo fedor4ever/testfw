@@ -1,0 +1,32 @@
+//
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description:  
+// Integration test system build description file for self test suite
+//
+
+PRJ_MMPFILES
+Platsec.mmp
+
+PRJ_EXPORTS
+
+TEFPlatsec.iby					\epoc32\rom\include\tefplatsec.iby
+
+// For Test Driver exports with Binary dependency
+..\TestDriver\PlatSecServer.xml			\epoc32\engineeringtools\tefutilities\platsec\xml\platsecserver.xml
+..\TestDriver\CapabilityPolicing.xml		\epoc32\engineeringtools\tefutilities\platsec\xml\platsecserver\capabilitypolicing.xml		
+..\TestDriver\Cleanup.xml		\epoc32\engineeringtools\tefutilities\platsec\xml\platsecserver\cleanup.xml		
+
+..\scripts\CapabilityPolicing.script		\epoc32\engineeringtools\tefutilities\platsec\scripts\capabilitypolicing.script
+..\scripts\cleanup.script		\epoc32\engineeringtools\tefutilities\platsec\scripts\cleanup.script
+..\data\CapabilityPolicing.ini	\epoc32\engineeringtools\tefutilities\platsec\data\capabilitypolicing.ini

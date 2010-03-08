@@ -1,0 +1,61 @@
+/*------------------------------------------------------------------
+ -
+ * Software Name : UserEmulator
+ * Version       : v4.2.1309
+ * 
+ * Copyright (c) 2009 France Telecom. All rights reserved.
+ * This software is distributed under the License 
+ * "Eclipse Public License - v 1.0" the text of which is available
+ * at the URL "http://www.eclipse.org/legal/epl-v10.html".
+ *
+ * Initial Contributors:
+ * France Telecom 
+ *
+ * Contributors:
+ *------------------------------------------------------------------
+ -
+ * File Name: animation_server.mmp
+ * 
+ * Created: 13/08/2009
+ * Author(s): Marcell Kiss
+ *   
+ * Description:
+ * Project specification file for Animation server dll
+ *------------------------------------------------------------------
+ -
+ *
+ */
+ 
+TARGET          Animation_server_0x20025CA8.dll
+TARGETTYPE      ani
+
+// The second one is the UID of the server, different than main program's UID
+UID             0x10003b22 0x20025CA8
+
+SECUREID	    0x20025CA8
+EPOCSTACKSIZE	0x5000
+
+SOURCEPATH      ..\src
+
+SOURCE          ServerDll.cpp
+SOURCE 		serverCtrl.cpp
+
+USERINCLUDE     ..\inc
+USERINCLUDE     ..\..\WSClient\inc
+USERINCLUDE     ..\..\..\inc
+
+SYSTEMINCLUDE   \epoc32\include
+
+LIBRARY         euser.lib  bafl.lib  efsrv.lib
+
+LANG            SC
+
+
+CAPABILITY ReadDeviceData PowerMgmt ProtServ SwEvent WriteDeviceData
+
+VENDORID        0
+
+EXPORTUNFROZEN
+
+// End of File
+SOURCE CaptureKeyTimer.cpp

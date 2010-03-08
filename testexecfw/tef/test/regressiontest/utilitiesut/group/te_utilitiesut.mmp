@@ -1,0 +1,46 @@
+/*
+* Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:  
+* Name		: UtilitiesUT.mmp
+* Author	  : Shuo Huang
+* This is the project specification file for UtilitiesUT.
+*
+*/
+
+
+
+TARGET		  te_regutiliesut.exe
+TARGETTYPE	  exe
+UID 0x1000007A  0x101F778F
+
+SYSTEMINCLUDE   /epoc32/include
+SYSTEMINCLUDE /epoc32/include/test
+USERINCLUDE   ../inc
+
+STATICLIBRARY	TEFUnit.lib
+LIBRARY			euser.lib
+LIBRARY			testexecuteutils.lib
+LIBRARY			efsrv.lib
+LIBRARY			TestExecuteLogClient.lib
+LIBRARY			TestExecutePIPSLogClient.lib
+LIBRARY			RFileLoggerClient.lib
+
+SOURCEPATH  ../src
+SOURCE      ctefutilitiesut.cpp
+SOURCE		te_regutiliesmain.cpp
+
+#ifdef ENABLE_ABIV2_MODE
+DEBUGGABLE
+#endif
+

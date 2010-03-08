@@ -1,0 +1,278 @@
+Date: <25-11-09>
+
+[Application Details]
+
+Name: UserEmulator
+UID: 0x2001C3AF
+
+Version: 4.2
+
+Build: 2509
+ 
+Description: 
+User Emulator is a tool for automated test creation, execution and management. It is capable of handling any 
+key events (up/down/left/right arrow, selection key, LSK, RSK, Menu key, alpha/numeric keys, etc) and pointer events.
+This tool helps in writing, reusing and executing tests on the code under development. 
+Threshold values for finger pointer events: 1-5 finger, 5-10 thumb, etc.
+
+FileName: UserEmulator_v4.2_2509.SISX
+
+[Platform Details]
+
+OS Name/Version:                S60 v3.1 , S60 v3.2, s60 5.0
+Test Device Name:               Nokia 6220, Nokia 5800
+Test Device Firmware version:   100.07.76
+				08-06-2008	RM-346
+				Nokia N95 : V30.0.015 15-07-08 RM-159
+                                
+
+[Languages Supported] 
+UK-EN - default
+
+[Countries Supported] 
+UK 
+
+[Screen Resolutions Supported]
+All
+
+
+[New Features]
+
+
+[Resolved Issues]
+- Bug 1358 - UserEmulator bug fixes related to Script recording and playback
+
+[Known Issues]
+1. Key emulations to java midlets are not working properly
+   Ex. Music store
+2. Alphanumeric keypad is not working with script recording. Workaround for this issue is to 
+   manually create the script by adding the tag <keys> <name> </keys>
+   - Recording Hash press for copy and paste is not supported in the alphanumeric keypad. 
+3. During replay User Emulator has speed issues sometimes. It can't replay events as fast as it should and
+    this can cause differences between recording and replay.
+4. In order to get the same results during script execution, all the screens on the device should be reset to 
+    its initial state before script recording and playback. 
+    o Currently the tool supports basic reset functionality of resetting the Menu application's scroll bar, 
+      closing any open applications on the device and resetting the idle screen. 
+    o If there are any changes to the application position in the Menu application or any changes on the 
+      HomeScreen, the script when played back may not produce the same results. This is a known limitation of the tool.
+5. On some 3.1/3.2 devices a menu opens in Idle screen instead of screen reset.
+6. Scripts recorded earlier will not work with the latest release and they have to be used with older version of UE.  ( <= v4.2_1309)!
+
+
+[Comments]
+This release of the User Emulator tool supports the following features.
+- Application launching/closing
+- Key Emulations
+- Looping (Simple, Nested)
+- Pause
+- Support for East European Characters (UTF-16)
+- Multiple views displaying scripts in one view and logging in the other
+- Markable/Multi selection of test scripts for execution
+- Support for named key codes and special characters in the script
+- Capturing panics
+- Stop/Cancel script execution
+- Mentioning infinite value for looping
+- logging the script execution to a log file
+- Key press recording (with long key presses)
+- Pointer events simulation/recording
+- Screen shots
+- Random test runner
+- Reset main menu's scroll bar and iddle screen
+- Long file names are limited to max. 196 characters.
+- User Emulator can be installed on C: drive only. (No drive choice at install time)
+- Scripts recorded with the latest release will work on all the devices (Nokia/SE/Samsung) provided all have the same setup (icons, etc. in the same place)
+
+[Contact Details]
+
+Name: Reshma Sandeep Das
+Email: reshma.sandeepdas@orange-ftgroup.com
+--------------------------------------------------------------------------------------------------------------------------------------
+
+Date: <13-08-09>
+
+[Application Details]
+
+Name: UserEmulator
+UID: 0x2001C3AF
+
+Version: 4.2
+
+Build: 1309
+ 
+Description: 
+User Emulator is a tool for automated test creation, execution and management. It is capable of handling any 
+key events (up/down/left/right arrow, selection key, LSK, RSK, Menu key, alpha/numeric keys, etc) and pointer events.
+This tool helps in writing, reusing and executing tests on the code under development.
+Threshold values for finger pointer events: 1-5 finger, 5-10 thumb, etc.
+
+FileName: UserEmulator_v_4.2_1309.SISX
+
+[Platform Details]
+
+OS Name/Version:                S60 v3.1 , S60 v3.2, s60 5.0
+Test Device Name:               Nokia N95, Nokia 6220, Nokia 5800
+Test Device Firmware version:   100.07.76
+			        08-06-2008
+				RM-346   
+				Nokia N95 : V30.0.015 15-07-08 RM-159                            
+                                
+
+[Languages Supported] 
+UK-EN - default
+
+[Countries Supported] 
+UK 
+
+[Screen Resolutions Supported]
+All
+
+
+[New Features]
+- Command line support added
+
+[Resolved Issues]
+- Bug ID 288 :  - Added User Emulator tool under https://developer.symbian.org/sfl/FCL/sftools/ana/testfw/testexecfw/ package 
+                  in Symbian Foundation
+		- Added support for multiple application support for Random test
+- UE tool supported on Samsung Acme and Sony Ericsson Kokura phones
+- Bug 366: Run UserEmulator from command line 
+
+[Known Issues]
+1. Key emulations to java midlets are not working properly
+   Ex. Music store
+2. Alphanumeric keypad is not working with script recording. Workaround for this issue is to 
+   manually create the script by adding the tag <keys> <name> </keys>
+3. During replay User Emulator has speed issues sometimes. It can't replay events as fast as it should and
+    this can cause differences between recording and replay.
+4. In order to get the same results during script execution, all the screens on the device should be reset to 
+    its initial state before script recording and playback. 
+    o Currently the tool supports basic reset functionality of resetting the Menu application's scroll bar, 
+      closing any open applications on the device and resetting the idle screen. 
+    o If there are any changes to the application position in the Menu application or any changes on the 
+      HomeScreen, the script when played back may not produce the same results. This is a known limitation of the tool.
+
+[Comments]
+This release of the User Emulator tool supports the following features.
+- Application launching/closing
+- Key Emulations
+- Looping(Simple,Nested loops)
+- Pause
+- Support for East European Characters (UTF-16)
+- Multiple views displaying scripts in one view and logging in the other
+- Markable/Multi selection of test scripts for execution
+- Support for named key codes and special characters in the script
+- Capturing panics
+- Stop/Cancel script execution
+- Mentioning infinite value for looping
+- logging the script execution to a log file
+- Key press recording (with long key presses)
+- Pointer events simulation/recording
+- Screen shots
+- Random test runner
+- Reset main menu's scroll bar and iddle screen
+- Long file names are limited to max. 196 characters.
+- User Emulator can be installed on C: drive only. (No drive choice at install time)
+
+
+[Contact Details]
+
+Name: Reshma Sandeep Das
+Email: reshma.sandeepdas@orange-ftgroup.com
+-----------------------------------------------------------------------------------------------------------------------------------
+Date: <29-07-09>
+
+[Application Details]
+
+Name: UserEmulator
+UID: 0x2001C3AF
+
+Version: 3.7
+
+Build: 2907
+ 
+Description: 
+User Emulator is a tool for automated test creation, execution and management. It is capable of handling any 
+key events (up/down/left/right arrow, selection key, LSK, RSK, Menu key, alpha/numeric keys, etc) and pointer events.
+This tool helps in writing, reusing and executing tests on the code under development.
+Threshold values for finger pointer events: 1-5 finger, 5-10 thumb, etc.
+
+FileName: UserEmulator_v_3.7_2907.SISX
+
+[Platform Details]
+
+OS Name/Version:                S60 v3.1 , S60 v3.2, s60 5.0
+Test Device Name:               Nokia N95, Nokia 6220, Nokia 5800
+Test Device Firmware version:   100.07.76
+																08-06-2008
+																RM-346   
+																Nokia N95 : V30.0.015 15-07-08 RM-159                            
+                                
+
+[Languages Supported] 
+UK-EN - default
+
+[Countries Supported] 
+UK 
+
+[Screen Resolutions Supported]
+All
+
+
+[New Features]
+- Screen reset functioanlity added. Script recording and execution starts at the idle screen after resetting the 
+  Menu application's scroll bar, closing any open applications on the device and resetting the idle screen
+  Home Screen v3.2 doesnot support screen reset functionality
+
+[Resolved Issues]
+- Random Test on 3.2 devices
+- Key simulations in Landscape mode
+
+[Known Issues]
+1. Key emulations to java midlets are not working properly
+   Ex. Music store
+2. User emulator doesn't run properly on Samsung phone(s).
+3. Alphanumeric keypad is not working with script recording. Workaround for this issue is to 
+   manually create the script by adding the tag <keys> <name> </keys>
+4. During replay User Emulator has speed issues sometimes. It can't replay events as fast as it should and
+    this can cause differences between recording and replay.
+5. In order to get the same results during script execution, all the screens on the device should be reset to 
+    its initial state before script recording and playback. 
+    o Currently the tool supports basic reset functionality of resetting the Menu application's scroll bar, 
+      closing any open applications on the device and resetting the idle screen. 
+    o If there are any changes to the application position in the Menu application or any changes on the 
+      HomeScreen, the script when played back may not produce the same results. This is a known limitation of the tool.
+
+[Comments]
+This release of the User Emulator tool supports the following features.
+- Application launching/closing
+- Key Emulations
+- Looping
+- Pause
+- Support for East European Characters (UTF-16)
+- Multiple views displaying scripts in one view and logging in the other
+- Markable/Multi selection of test scripts for execution
+- Support for named key codes and special characters in the script
+- Capturing panics
+- Stop/Cancel script execution
+- Mentioning infinite value for looping
+- logging the script execution to a log file
+- Key press recording (with long key presses)
+- Pointer events simulation/recording
+- Screen shots
+- Random test runner
+- Reset main menu's scroll bar and iddle screen
+- Long file names are limited to max. 196 characters.
+- User Emulator can be installed on C: drive only. (No drive choice at install time)
+
+
+Following features are yet to be implemented
+- Command line support
+- Loops inside loop feature
+- Samsung device support
+
+[Contact Details]
+
+Name: Reshma Sandeep Das
+Email: reshma.sandeepdas@orange-ftgroup.com
+-----------------------------------------------------------------------------------------------------------------------------------

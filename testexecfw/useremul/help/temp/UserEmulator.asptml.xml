@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<!DOCTYPE asptml SYSTEM "file:///C:/S60/devices/S60_5th_Edition_SDK_v1.0/epoc32/tools/cshlpcmp/dtd/asptml.dtd">
+<?xml:stylesheet href="file:///C:/S60/devices/S60_5th_Edition_SDK_v1.0/epoc32/tools/cshlpcmp/xsl/asptml.xsl" title="asptml" type="text/xsl"?>
+<asptml>
+
+
+
+
+
+<uid value="0x2001C3AF"/><topic><category>Category</category><topictitle>Topic title</topictitle>
+<synonyms>Synonyms for the topic</synonyms>
+<context contextUID="Context1" comment="with a comment"/>
+<index>User Emulator</index>
+<p><b>Purpose and Scope</b></p>
+<p>This document provides an outline on the User Emulator tool, instructions on how to use the tool and guidelines on reading and analysing the results after running the tool.</p>
+<p><b>Overview</b></p>
+<p><b>User Emulator:</b></p>
+<p>User Emulator is a tool for automated test creation, execution and management. The tool is very useful to automate functional and non-functional testing of applications. Eg, stress testing application usage over 24 hours. Regression testing, etc. </p>
+<p>The user emulator tool programmatically simulates application UI usage as described in an XML script on the S60 device. This tool helps in writing, reusing and executing tests on the code under development.</p>
+<p>Following are the features supported by the User Emulator tool:</p>
+<p>&ndash; Up/down/left/right arrow key events</p>
+<p>&ndash; Selection, LSK, RSK key events</p>
+<p>&ndash; Menu key events</p>
+<p>&ndash; Alpha-Numeric key events</p>
+<p>&ndash; Launch application using UID/Name</p>
+<p>&ndash; Loops in XML script</p>
+<p>&ndash; Pointer/Touch events</p>
+<p>&ndash; Take Screen shots</p>
+<p>&ndash; Capture Panics </p>
+<p>&ndash; Log to file</p>
+<p>&ndash; Record and playback of Key/Pointer events</p>
+<p>&ndash; Random Test </p>
+<p>&ndash; Random Test to stress all applications under S60 menu system</p>
+<p>&ndash; Random Test targeted to specific applications</p>
+<p><b>Menu Options: </b></p>
+<p>After the application launch, any scripts available in the default settings path are displayed to the user. This view is refreshed if there is any change in the settings path or addition/deletion of scripts.</p>
+<p><b>1</b><b>. Run Scripts</b></p>
+<p>Script execution can start by selecting the Run Scripts menu option. Script selection can be made by clicking on a script name. Single selection or multiple script selection option is available to the user. After the selection, file(s) are parsed using an XML parser and appropriate actions are performed. Visual indications of scripts execution pass/fail/cancellation are displayed using icons on the screen.</p>
+<p>Green Icon: pass</p>
+<p>Red Icon: Fail</p>
+<p>Yellow Icon: Cancellation of script execution</p>
+<p>Script run starts on idle screen after the Menu application and idle screen reset</p>
+<p><b>2</b><b>. Select</b></p>
+<p>This option can be used for file selection and de-selection respectively. There is an option to select/de-select a single file or multiple files at the same time.</p>
+<p><b>3</b><b>. Record input</b></p>
+<p>This menu option allows users to start recording any key presses or screen taps. User has to enter a name for the recorded script. The file name cannot contain any special characters. An error message is displayed to the user and a dialog is prompted to enter correct filename. The file is stored in 'Scripts Path ' folder. Screenshot tag can be added dynamically in the script by pushing the camera button once during script recording. Recording can be cancelled any time by pressing the power button once.</p>
+<p>Script recording starts on idle screen after the Menu application and idle screen reset</p>
+<p><b>4</b><b>. Random test run</b></p>
+<p>Starts the random test on the device and sends random key presses and screen taps to the device. Random test can be stopped by pressing the power button once.</p>
+<p><b>5</b><b>. Settings</b></p>
+<p>This menu option launches a settings dialog that has configuration information for the User Emulator tool.</p>
+<p>Scripts Path: User can modify the storage path of the test scripts.</p>
+<p>Log Status: Logging option can be turned ON/OFF using this settings option.      </p>
+<p>Log File Path: Path for the log file that logs the script execution actions. This file also captures any system wide panics.  </p>
+<p>Note: User has to exit the tool in order to check the log files. Log files are overwritten every time the tool starts.</p>
+<p>Target for Random Test? Can be ON/OFF. 'ON' enables random tests on ID specified application(s). If it is in 'OFF' state then random test will perform without starting an application at start time.</p>
+<p>App Ids of Random Test: If the previous option is 'ON' then 'Random test run' will start application(s) at the beginning of the test using these IDs.</p>
+<p><b>6</b><b>. System Info</b></p>
+<p>Option that gives the complete system information </p>
+<p><b>7</b><b>. Help</b></p>
+<p>Help file describing the User Emulator tool usage</p>
+<p><b>8</b><b>. About</b></p>
+<p>A brief about the tool</p>
+<p><b>Middle soft K</b><b>ey Options:</b></p>
+<p><b>Run Scripts</b></p>
+<p>User can call Run Scripts to run a script on focus. </p>
+<p><b>XML Script Format</b></p>
+<p style="style1">This section describes the data format of the XML script that is generated during script recording operation from an S60 device.</p>
+<p style="style1">The XML script has user actions (key inputs/ screen taps) recorded and can be used to simulate the same during script execution.</p>
+<p style="style1">Each user action is written as an action element enclosed within the main tag having the following syntax:</p>
+<p style="style1">Syntax:</p>
+<p style="style1">&lt;UserEmulator></p>
+<p style="style1"> &lt;action></p>
+<p style="style1">  &lt;name>. &lt;/name></p>
+<p style="style1">  &lt;type>. &lt;/type></p>
+<p style="style1">  &lt;params>. &lt;/params></p>
+<p style="style1">  &lt;keys>. &lt;/keys> </p>
+<p style="style1">  &lt;screenshot> . &lt;/screenshot></p>
+<p style="style1">  &lt;print> . &lt;/print></p>
+<p style="style1"> &lt;/action> </p>
+<p style="style1">&lt;/UserEmulator></p>
+<p style="style1">Description of tags and elements</p>
+<p style="style1">&lt;name>... &lt;/name>: </p>
+<p style="style1">This is an optional tag which can be used to define the action. A meaningful name can be given to this tag to identify the action. </p>
+<p style="style1">Syntax:</p>
+<p style="style1"> &lt;name> &lt;Application name> &lt;/name></p>
+<p style="style1">Example: </p>
+<p style="style1">  &lt;name> Calculator &lt;/name></p>
+<p style="style1">&lt;type>... &lt;/type>: </p>
+<p style="style1">This is a mandatory tag which should be defined to identify the type of action. User has to choose any one of the below mentioned values to identify the type of action.</p>
+<p style="style1">Currently supported types of action: </p>
+<p style="style1">   - app      (To launch an application)</p>
+<p style="style1">   - view     (To switch the views)</p>
+<p style="style1">   - closeapp   (To close any application)</p>
+<p style="style1">   - keypress   (To simulate key press)</p>
+<p style="style1">   - wait           (To pause for the specified duration in milliseconds)</p>
+<p style="style1">   - javaapp     (To launch a java midlet)</p>
+<p style="style1">   - pointerevent (To simulate pointer events)</p>
+<p style="style1">   - orientation    (Change device's screen orientation (portrait or landscape mode))</p>
+<p style="style1">   - screenreset  (Resets menu screen and older version of Home Screen's idle screen )</p>
+<p style="style1">Note: </p>
+<p style="style1">The above types of action are case sensitive </p>
+<p style="style1">Syntax:</p>
+<p style="style1"> &lt;type> &lt;action-type> &lt;/type></p>
+<p style="style1">Example: </p>
+<p style="style1">  &lt;type> app &lt;/type></p>
+<p style="style1">  &lt;type> view &lt;/type></p>
+<p style="style1">  &lt;type> closeapp &lt;/type></p>
+<p style="style1">&lt;params>... &lt;/params>: </p>
+<p style="style1">This tag should be used to pass parameters for carrying out specified action. This tag is mandatory if the &lt;type> tag is set to any one of the following types:</p>
+<p style="style1">"app, view, closeapp, wait, javaapp"</p>
+<p style="style1">Syntax:</p>
+<p style="style1">  &lt;params> &lt;application specific params> &lt;/type></p>
+<p style="style1">Example:</p>
+<p style="style1">In order to launch an application, currently the UID of the application has to be passed as the first parameter and the application name as the second parameter. Comma (',') is used as a delimiter between the parameters. The second parameter (application name) is a label which is required for logging purposes</p>
+<p style="style1">&lt;params> 0x10005902, Calculator &lt;/params> //Launches the calculator application</p>
+<p style="style1">For closing an application, the UID of the application along with the application name (comma separated) to be closed should be passed.</p>
+<p style="style1">&lt;params> 0x10005902, Calculator &lt;/params> // Closes the calculator application</p>
+<p style="style1">In order to switch views, application UID and view ID (comma separated) should be passed to the params tag</p>
+<p style="style1">&lt;params> 0x101f4cd5, 0x05 &lt;/params> // Activates Missed calls view</p>
+<p style="style1">For wait operation, the time interval in milliseconds should be specified as follows:</p>
+<p style="style1">&lt;params> 100 &lt;/params> //Pause for 100 milliseconds</p>
+<p style="style1">For launching a java midlet, midlet name should be specified in the params tag. Midlet name is case sensitive.</p>
+<p style="style1">&lt;params> Music Store &lt;/params> //Launches Music Store application</p>
+<p style="style1">&lt;keys>&#8230; &lt;/keys>: </p>
+<p style="style1">This tag should be used to pass any key events to the application. More than one key code can be specified in the &lt;keys> tag. Space (" ") is used as a delimiter between the key codes. Following key codes can be passed as the key events in &lt;keys> tag.</p>
+<p style="style1"> Key Codes Reference:</p>
+<p style="style1">  LSK     = left soft key</p>
+<p style="style1">  RSK    = right soft key</p>
+<p style="style1">  DAK    = down arrow key</p>
+<p style="style1">  RAK    = right arrow key</p>
+<p style="style1">  LAK     = left arrow key</p>
+<p style="style1">  UAK    = up arrow key</p>
+<p style="style1">  MSK    = Middle soft key</p>
+<p style="style1">  SP       = Space</p>
+<p style="style1">  BS       = Backspace/clear</p>
+<p style="style1">  lt          = Less Than</p>
+<p style="style1">  gt         = Greater Than</p>
+<p style="style1">  amp     = Ampersand</p>
+<p style="style1">  MENU  = Menu</p>
+<p style="style1">  KYES  = Green Key</p>
+<p style="style1">  KNO    = Red Key</p>
+<p style="style1">  1 = Number 1</p>
+<p style="style1">  2 = Number 2</p>
+<p style="style1">  3 = Number 3  </p>
+<p style="style1">  4 = Number 4</p>
+<p style="style1">  5 = Number 5</p>
+<p style="style1">  6 = Number 6</p>
+<p style="style1">  7 = Number 7  </p>
+<p style="style1">  8 = Number 8</p>
+<p style="style1">  9 = Number 9</p>
+<p style="style1"> </p>
+<p style="style1">Alphabets: </p>
+<p style="style1">a-z and A-Z  </p>
+<p style="style1">Special characters:</p>
+<p style="style1">. ? @  , ' ! " - ( ) / : _ ; + % = [ ] { } \ ~ ^ | ` $</p>
+<p style="style1">Syntax:</p>
+<p style="style1">  &lt;keys> &lt;key value > &lt;/type> </p>
+<p style="style1">Example: </p>
+<p style="style1">   &lt;keys> DAK &lt;keys> // Press down arrow key </p>
+<p style="style1">Loop:</p>
+<p style="style1">This tag should be used to specify any repetitive actions and should be defined using the tag  </p>
+<p style="style1">   &lt;loop count='2'> // begin loop </p>
+<p style="style1">   .</p>
+<p style="style1">   .</p>
+<p style="style1">   &lt;/loop> // end loop</p>
+<p style="style1">In the above tag, 'count' indicates the number of times the set of actions has to be executed in a loop. </p>
+<p style="style1">Syntax:</p>
+<p style="style1">    &lt;loop count=&lt;enter the count value for looping action></p>
+<p style="style1">     .</p>
+<p style="style1">     .</p>
+<p style="style1">     &lt;/loop></p>
+<p style="style1">Example:</p>
+<p style="style1">&lt;loop count='5'></p>
+<p style="style1"> &lt;action></p>
+<p style="style1">  &lt;names> enter 1 &lt;/name></p>
+<p style="style1">  &lt;type>    keypress   &lt;/type></p>
+<p style="style1">  &lt;keys>   1 &lt;/keys></p>
+<p style="style1"> &lt;/action></p>
+<p style="style1"> &lt;/loop></p>
+<p style="style1">In the above example, key press 1 is sent to the application. This operation is carried out five times in a loop. </p>
+<p style="style1">Note: </p>
+<p style="style1">By specifying the count value as 'infinite', one can execute the operations in a loop infinitely.</p>
+<p style="style1">Stopping Script Executions</p>
+<p style="style1">Script execution can be interrupted by pressing the Power button on the device.</p>
+<p style="style1">   </p>
+<p style="style1">Example for launching a calculator application</p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>   Calculator &lt;/name></p>
+<p style="style1">  &lt;type>   app   &lt;/type></p>
+<p style="style1">  &lt;params> 0x10005902, Calculator&lt;/params></p>
+<p style="style1">&lt;/action></p>
+<p style="style1">Example for switching views </p>
+<p style="style1">Activates the Missed calls view</p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>   Missed Calls &lt;/name></p>
+<p style="style1">  &lt;type>   view   &lt;/type></p>
+<p style="style1">  &lt;params> 0x101f4cd5, 0x05 &lt;/params></p>
+<p style="style1">  &lt;keys>   MSK MSK &lt;/keys></p>
+<p style="style1">&lt;/action></p>
+<p style="style1">Example for closing a calculator application</p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>   Calculator &lt;/name></p>
+<p style="style1">  &lt;type>   closeapp   &lt;/type></p>
+<p style="style1">  &lt;params> 0x10005902, calculator&lt;/params></p>
+<p style="style1">&lt;/action></p>
+<p style="style1">Example for keypress action </p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;type>   keypress   &lt;/type></p>
+<p style="style1">  &lt;keys>   1 2 &lt;/keys></p>
+<p style="style1">&lt;/action></p>
+<p style="style1">Example for wait/pause</p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>   pause &lt;/name></p>
+<p style="style1">  &lt;type>   wait   &lt;/type></p>
+<p style="style1">  &lt;params> 4000 &lt;/params> //Time interval in milliseconds</p>
+<p style="style1">&lt;/action></p>
+<p style="style1">Example for Loop action</p>
+<p style="style1">&lt;loop count='5'></p>
+<p style="style1"> &lt;action></p>
+<p style="style1">  &lt;name>   enter 1 and 2 &lt;/name></p>
+<p style="style1">  &lt;type>   keypress   &lt;/type></p>
+<p style="style1">  &lt;keys>   1 2 &lt;/keys></p>
+<p style="style1"> &lt;/action></p>
+<p style="style1"> &lt;/loop></p>
+<p style="style1">Example for launching a java application</p>
+<p style="style1">Launches the Music Store application</p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>   Music Store &lt;/name></p>
+<p style="style1">  &lt;type>   javaapp  &lt;/type></p>
+<p style="style1">  &lt;params> Music Store &lt;/params> //Midlet name </p>
+<p style="style1">&lt;/action></p>
+<p style="style1">&lt;print>&#8230;&lt;/print>:</p>
+<p style="style1">This is an optional tag that can be added in the scripts to print any debug logs. </p>
+<p style="style1">Example:</p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>   Calculator &lt;/name></p>
+<p style="style1">  &lt;type>   app   &lt;/type></p>
+<p style="style1">  &lt;params> 0x10005902, calculator&lt;/params></p>
+<p style="style1">  &lt;print>Open calculator&lt;/print></p>
+<p style="style1"> &lt;/action></p>
+<p style="style1">&lt;screenshot> &#8230; &lt;/screenshot></p>
+<p style="style1">User Emulator can take a screenshot of the action that has the &lt;screenshot> tag. The image file is stored with the name specified in the &lt;screenshot tag> under the &lt;\Logs\script file name> directory specified in the settings dialog. </p>
+<p style="style1">During script recording, this tag can be automatically added at any stage of recording, by just clicking on the camera button once. The name of the screenshot is added automatically and has the following format:</p>
+<p style="style1">"app name in foreground"-"time stamp"</p>
+<p style="style1">Example:</p>
+<p style="style1">&lt;screenshot> Menu-4563678 &lt;/screenshot></p>
+<p style="style1">Pointer Events</p>
+<p style="style1">User Emulator can simulate pointer events on the touch enabled devices. Following are the pointer events currently supported. The pointer events are added within the &lt;params> tag.</p>
+<p style="style1">pointerdownAt ,x, y: Simulates pointer down event. &break;x and y values are the co-ordinates of the pointer. (Start of a flick or tap, etc.)</p>
+<p style="style1">pointerupAt, x,y: Simulates pointer up event. &break;x and y values are the co-ordinates of the pointer. (End of a flick or tap, etc.)</p>
+<p style="style1">moveto x, y: Simulates pointer move event. &break;x and y values are the co-ordinates of the end of movement.</p>
+<p style="style1">pointerdownAt, x, y, z:  Simulates finger down event. &break;x and y values are the co-ordinates of the finger. Z is a threshold value. (Added to every co-ordinates)</p>
+<p style="style1">pointerupAt, x,y,z: Simulates finger up event. &break;x and y values are the co-ordinates of the finger. Z is a threshold value. (Added to every co-ordinates)</p>
+<p style="style1">moveto x, y,z: Simulates finger move event. &break;x and y values are the co-ordinates of the end of movement. Z is a threshold value. (Added to every co-ordinates)</p>
+<p style="style1">Example:</p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>  xxx &lt;/name></p>
+<p style="style1">  &lt;type>   pointerevent   &lt;/type></p>
+<p style="style1">  &lt;params> pointerdownAt,560,320,5 &lt;/params></p>
+<p style="style1">&lt;/action></p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>  xxx &lt;/name></p>
+<p style="style1">  &lt;type>   pointerevent   &lt;/type></p>
+<p style="style1">  &lt;params> moveTo, 520,310,5 &lt;/params></p>
+<p style="style1">&lt;/action></p>
+<p style="style1">&lt;action></p>
+<p style="style1">  &lt;name>  xxx &lt;/name></p>
+<p style="style1">  &lt;type>   pointerevent   &lt;/type></p>
+<p style="style1">  &lt;params> pointerupAt, 520,300,5 &lt;/params></p>
+<p style="style1">&lt;/action></p>
+<p style="style1">Note:</p>
+<p style="style1">Since on software level there is no difference between stylus, finger tap, thumb tap, etc. all types of pointer events have general pointer event names with a threshold value.</p>
+<p style="style1">In order to get the same results during script execution, all the screens on the device should be reset to its initial state before script recording and playback. </p>
+<p style="style1">Currently the tool supports basic reset functionality of resetting the Menu application's scroll bar, closing any open applications on the device and resetting the idle screen. </p>
+<p style="style1">If there are any changes to the application position in the Menu application or any changes on the Home Screen, the script when played back may not produce the same results. This is a known limitation of the tool</p>
+</topic></asptml>

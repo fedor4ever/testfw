@@ -1,0 +1,512 @@
+/*------------------------------------------------------------------
+ -
+ * Software Name : UserEmulator
+ * Version       : v4.2.1309
+ * 
+ * Copyright (c) 2009 France Telecom. All rights reserved.
+ * This software is distributed under the License 
+ * "Eclipse Public License - v 1.0" the text of which is available
+ * at the URL "http://www.eclipse.org/legal/epl-v10.html".
+ *
+ * Initial Contributors:
+ * France Telecom 
+ *
+ * Contributors:
+ *------------------------------------------------------------------
+ -
+ * File Name: UserEmulator.rss
+ * 
+ * Created: 13/08/2009
+ * Author(s): Marcell Kiss, Reshma Sandeep Das
+ *   
+ * Description:
+ * This file contains all the resources for the UserEmulator.
+ *------------------------------------------------------------------
+ -
+ *
+ */
+
+//  RESOURCE IDENTIFIER
+NAME USER	// 4 letter ID
+
+
+// Common Include files
+#include <eikon.rh>
+#include <avkon.rsg>
+#include <avkon.rh>
+#include <appinfo.rh>
+
+//Component Include files
+#include "UserEmulator.hrh"
+#include "UserEmulator.rls"
+
+//  RESOURCE DEFINITIONS
+// -----------------------------------------------------------------------------
+//
+//	Define the resource file signature
+//	This resource should be empty.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE RSS_SIGNATURE
+	{
+	}
+
+// -----------------------------------------------------------------------------
+//
+//	Default Document Name
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TBUF r_default_document_name
+	{
+	buf=qtn_user;
+	}
+
+// -----------------------------------------------------------------------------
+//  EIK_APP_INFO
+//	Define default menu and CBA key.
+// -----------------------------------------------------------------------------
+//
+RESOURCE EIK_APP_INFO
+{
+	menubar = r_menubar;
+	cba = r_softkeys_scripts;
+}
+
+// -----------------------------------------------------------------------------
+//  r_softkeys_scripts
+//	Defines the CBA buttons for the scripts view
+// -----------------------------------------------------------------------------
+//
+RESOURCE CBA r_softkeys_scripts
+{
+    buttons =
+    {
+        AVKON_CBA_BUTTON { id = EAknSoftkeyOptions; txt = qtn_softkey_options; },
+        AVKON_CBA_BUTTON { id = EAknSoftkeyExit; txt = qtn_exit; },
+        AVKON_CBA_BUTTON { id = ESelectRunScript; txt = qtn_run_scripts;}
+    };
+}
+
+RESOURCE CBA r_softkeys_noscripts
+{
+    buttons =
+    {
+        AVKON_CBA_BUTTON { id = EAknSoftkeyOptions; txt = qtn_softkey_options; },
+        AVKON_CBA_BUTTON { id = EAknSoftkeyExit; txt = qtn_exit; }
+    };
+}
+
+// -----------------------------------------------------------------------------
+//   r_menubar
+//   Main menubar
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_BAR r_menubar
+{
+	titles =
+	{
+			MENU_TITLE { menu_pane = r_menu; txt = "";},
+			MENU_TITLE { menu_pane = r_menupane_scripts; txt = ""; }
+	};
+}
+// -----------------------------------------------------------------------------
+//  r_menupane_scripts
+//	Defines the menu pane for the scripts view
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_menupane_scripts
+{
+    items =
+    {
+    	   MENU_ITEM
+    				{
+    				command = ESelectRunScript;
+    				txt = qtn_run_scripts;
+    				},
+    		MENU_ITEM 
+    				{
+    				command = EMenuSelectCmdId;
+    		        txt = qtn_select;
+    		        cascade = r_markunmark_submenu;
+    				},			
+			MENU_ITEM
+    				{
+    				command = ERecordKeys;
+    				txt = qtn_recordkeys;
+    				},
+    		MENU_ITEM
+    				{
+    				command = ERandomTestStart;
+    				txt = qtn_randomtest_start;
+    				},
+    		MENU_ITEM
+    				{
+    				command = ESettings;
+    				txt = qtn_settings;
+    				},
+    		MENU_ITEM
+    				{
+    				command = ESystemInfo;
+    				txt = qtn_systemInfo;
+    				}
+    };
+}
+
+// -----------------------------------------------------------------------------
+//  r_markunmark_submenu
+//	Defines the mark/unmark sub menu pane for the scripts view
+// -----------------------------------------------------------------------------
+//
+RESOURCE MENU_PANE r_markunmark_submenu
+	{
+	items =
+	    {
+	    MENU_ITEM
+	        {
+	        	command = EMark;
+	        	txt = qtn_mark;
+	        },
+	    MENU_ITEM
+	   		{
+	    	   	command = EMarkAll;
+	    	   	txt = qtn_markall;
+	    	},
+		MENU_ITEM
+	   		{
+	    	   	command = EUnmark;
+	    	   	txt = qtn_unmark;
+	    	},
+	    MENU_ITEM
+	     	{
+	    		command = EUnmarkAll;
+	    		txt = qtn_unmarkall;
+	     	}
+
+
+	    };
+	}
+// -----------------------------------------------------------------------------
+//   r_menu
+//   Menu options for general menu pane
+// -----------------------------------------------------------------------------
+
+RESOURCE MENU_PANE r_menu
+	{
+	items =
+		{
+		MENU_ITEM
+				{
+				command = EHelp;
+				txt = qtn_help;
+				},
+		MENU_ITEM
+				{
+				command = EAbout;
+				txt = qtn_about;
+				},
+		MENU_ITEM
+				{
+				command = EAknSoftkeyExit;
+				txt = qtn_exit;
+				}
+		};
+	}
+
+// -----------------------------------------------------------------------------
+// r_about_query_dialog
+// About dialog resource.
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_about_query_dialog
+	{
+	flags = EGeneralQueryFlags | EEikDialogFlagNoBorder | EEikDialogFlagNoShadow;
+	buttons = R_AVKON_SOFTKEYS_OK_EMPTY;
+	items=
+		{
+		DLG_LINE 
+			{
+			type = EAknCtPopupHeadingPane;
+			id = EAknMessageQueryHeaderId;
+			itemflags = EEikDlgItemNonFocusing;
+			control = AVKON_HEADING
+				{
+				};
+			},
+		DLG_LINE
+			{
+			type = EAknCtMessageQuery;
+			id = EAknMessageQueryContentId;
+			control = AVKON_MESSAGE_QUERY
+				{
+				};
+			}
+		};
+	}
+
+
+// -----------------------------------------------------------------------------
+//
+// Resources for messages.
+//
+// -----------------------------------------------------------------------------
+//
+RESOURCE TBUF32 r_caption_string { buf=qtn_caption_string; }
+RESOURCE TBUF32 r_about_dialog_title { buf=qtn_about_dialog_title; }
+RESOURCE TBUF r_about_dialog_text { buf=qtn_about_dialog_text; }
+RESOURCE TBUF r_ue_error_app_not_present {buf = qtn_ue_error_app_not_present;}
+RESOURCE TBUF r_setting_path_selector {buf = qtn_scripts_path;}
+RESOURCE TBUF r_setting_log_selector {buf = qtn_log_path;}
+RESOURCE TBUF r_setting_log_status {buf = qtn_logstatus;}
+RESOURCE TBUF r_setting_randomtest_status {buf = qtn_random_test;}
+RESOURCE TBUF r_setting_randomtest {buf = qtn_appid;}
+
+RESOURCE TBUF r_text_confirmation_overwrite_file {buf = qtn_confirmation_overwrite_file;}
+RESOURCE TBUF r_text_system_details {buf = qtn_systemInfo;}
+RESOURCE TBUF r_format_system_details {buf = qtn_format_system_details;}
+RESOURCE TBUF r_format_system_details_file {buf = qtn_format_system_details_file;}
+RESOURCE TBUF r_binary_options {buf = qtn_binary_options;}
+// ---------------------------------------------------------------------------- 
+//
+// r_localisable_app_info
+// localisable application information
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE LOCALISABLE_APP_INFO r_localisable_app_info
+	{
+	short_caption = qtn_caption_string;
+	caption_and_icon = 
+	CAPTION_AND_ICON_INFO
+		{
+		caption = qtn_caption_string;
+
+		number_of_icons = 1;
+		icon_file = qtn_caption_iconfile;
+		};
+	}
+
+// -----------------------------------------------------------------------------
+// r_dialog_settings
+// Settings dialog
+// -----------------------------------------------------------------------------
+//
+RESOURCE DIALOG r_dialog_settings
+{
+    title = qtn_settings_title;
+    buttons = R_AVKON_SOFTKEYS_SELECT_CLOSE;
+    flags = EAknDialogSelectionList;
+    items = {};
+}
+
+// -----------------------------------------------------------------------------
+// r_setting_item_list
+// Settings item list
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_ITEM_LIST r_setting_item_list
+{
+  title = qtn_settings_title;
+}
+
+// -----------------------------------------------------------------------------
+// r_text_setting_page
+// Text settings item page
+// -----------------------------------------------------------------------------
+//
+RESOURCE AVKON_SETTING_PAGE r_text_setting_page
+{
+    type = EEikCtEdwin;
+    editor_resource_id = r_name_edwin;
+}
+
+// ---------------------------------------------------------------------------- 
+// r_name_edwin
+// edwin resource editor
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE EDWIN r_name_edwin
+{
+	width = 1000;
+	maxlength = 128;
+}
+
+// ---------------------------------------------------------------------------- 
+// r_log_setting_list
+// Settings item list for log settings list
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE AVKON_SETTING_ITEM_LIST r_log_setting_list
+{
+  title = qtn_settings_title;
+}
+
+// ---------------------------------------------------------------------------- 
+// r_log_setting_page
+// Settings item list for log settings
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE AVKON_SETTING_PAGE r_log_setting_page
+{
+    type = EEikCtEdwin;
+    editor_resource_id = r_name_log_edwin;
+}
+
+// ---------------------------------------------------------------------------- 
+// r_name_log_edwin
+// Edwin editor
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE EDWIN r_name_log_edwin
+{
+	width = 1000;
+	maxlength = 256;
+}
+
+// ---------------------------------------------------------------------------- 
+// r_appid_setting_page
+// Edwin editor for entering the Application uids
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE AVKON_SETTING_PAGE r_appid_setting_page
+	{
+	type = EEikCtEdwin;
+	editor_resource_id = r_appid_edwin;
+	}
+
+RESOURCE EDWIN r_appid_edwin
+	{
+	width = 1000;
+	maxlength = 250;
+	} 
+// ---------------------------------------------------------------------------- 
+// r_binary_setting_page
+// Binary popup settings page for log settings
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE AVKON_SETTING_PAGE r_binary_setting_page
+{
+	label = r_binary_options;
+	type = EAknCtPopupSettingList;
+	editor_resource_id = r_binary_editor;
+  
+}
+
+RESOURCE POPUP_SETTING_LIST r_binary_editor
+{
+}
+
+RESOURCE AVKON_POPUP_SETTING_TEXTS r_binary_texts
+{
+    setting_texts_resource = r_binary_switch_on_off_text;  
+    popped_up_texts_resource = r_binary_switch_on_off_text_popped_up;
+}
+
+RESOURCE ARRAY r_binary_switch_on_off_text
+{
+    items =
+    {
+        AVKON_ENUMERATED_TEXT { value = 0; text = qtn_off; },
+        AVKON_ENUMERATED_TEXT { value = 1; text = qtn_on; }
+    };
+}
+
+RESOURCE ARRAY r_binary_switch_on_off_text_popped_up
+{
+    items =
+    {
+        LBUF { txt = qtn_off; },
+        LBUF { txt = qtn_on; }
+    };
+}
+
+// ---------------------------------------------------------------------------- 
+// r_query_confirmation
+// Query confirmation dialog
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE DIALOG r_query_confirmation
+{
+    flags = EGeneralQueryFlags;
+    buttons = R_AVKON_SOFTKEYS_YES_NO;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtQuery;
+            id = EConfirmationQuery;
+            control = AVKON_CONFIRMATION_QUERY
+            {
+                layout = EConfirmationQueryLayout;
+            };
+        }
+    };
+}
+
+// ---------------------------------------------------------------------------- 
+// r_dialog_info
+// dialog displaying system information of the device
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE DIALOG r_dialog_info
+{ 
+    flags = EGeneralQueryFlags | EEikDialogFlagNoBorder | EEikDialogFlagNoShadow;
+    buttons = R_AVKON_SOFTKEYS_OK_EMPTY;
+    items =
+    {
+        DLG_LINE
+        {
+            type = EAknCtPopupHeadingPane;
+            id = EAknMessageQueryHeaderId;
+            control = AVKON_HEADING
+            {
+            };
+        },
+        DLG_LINE
+        {
+            type = EAknCtMessageQuery;
+            id = EAknMessageQueryContentId;
+            control = AVKON_MESSAGE_QUERY
+            {
+            };
+        }
+    };
+}
+
+
+// ---------------------------------------------------------------------------- 
+// R_FILE_DIALOG
+// Query dialog to get the input script name during recording
+// ---------------------------------------------------------------------------- 
+//
+RESOURCE DIALOG r_file_dialog 
+	{ 
+	flags = EGeneralQueryFlags; 
+	buttons = R_AVKON_SOFTKEYS_OK_CANCEL; 
+	items= 
+	    { 
+	    DLG_LINE 
+	        {
+	        type = EAknCtQuery;
+	        id = EGeneralQuery;
+	        control= AVKON_DATA_QUERY
+	           {
+	                layout = EDataLayout;
+	                label = qtn_text_query;
+	                control = EDWIN
+	                    {
+	                    flags = EEikEdwinNoHorizScrolling | EEikEdwinResizable;
+	                    width = 5;
+	                    maxlength = 192;
+	                    // added to limit expanding in forms. 
+	                    // If you want full screen use 6 here
+	                    max_view_height_in_lines = 5; 
+	                    // if you have the line above, you must have this. 
+	                    // It's calculable from LAF
+	                    base_line_delta = 21; 
+	                    };
+	           };
+	        } 
+	    }; 
+	} 
+// End of File

@@ -1,0 +1,156 @@
+/*------------------------------------------------------------------
+ -
+ * Software Name : UserEmulator
+ * Version       : v4.2.1309
+ * 
+ * Copyright (c) 2009 France Telecom. All rights reserved.
+ * This software is distributed under the License 
+ * "Eclipse Public License - v 1.0" the text of which is available
+ * at the URL "http://www.eclipse.org/legal/epl-v10.html".
+ *
+ * Initial Contributors:
+ * France Telecom 
+ *
+ * Contributors:
+ *------------------------------------------------------------------
+ -
+ * File Name: UserEmulator.rls
+ * 
+ * Created: 13/08/2009
+ * Author(s): Marcell Kiss, Reshma Sandeep Das
+ *   
+ * Description:
+ * This is a localisation file for UserEmulator.
+ * A .rls file is the one and only place where the logical
+ * strings to be localised are defined.
+ *------------------------------------------------------------------
+ -
+ * 
+ */
+
+//  LOCALISATION STRINGS
+// Caption string for app.
+//
+#define qtn_caption_string "UserEmulator"
+
+// Application name
+//
+#define qtn_caption_appname "UserEmulator_0x2001C3AF"
+
+// Help menu item in "Options" menu pane
+//
+#define qtn_help "Help"
+
+// About menu item in "Options" menu pane
+//
+#define qtn_about "About"
+
+// Exit menu item in "Options" menu pane
+#define qtn_exit "Exit"
+
+// resource file location
+//
+#define qtn_loc_resource_file_1 "\\resource\\apps\\UserEmulator_0x2001C3AF"
+
+// About dialog title
+//
+#define qtn_about_dialog_title "About"
+
+// About dialog text
+//
+#define qtn_about_dialog_text "UserEmulator v4.2.2509"<0x2028>"France Telecom R&D UK "
+
+// Error message display for application not found
+//
+#define qtn_ue_error_app_not_present "Error Application not present"
+
+// Run Script menu item in "Options" menu pane
+//
+#define qtn_run_scripts "Run Scripts"
+
+// Settings menu item in "Options" menu pane
+//
+#define qtn_settings "Settings"
+
+// Select menu item in "Options" menu pane
+//
+#define qtn_select "Select"
+
+// cba softkey options
+//
+#define qtn_softkey_options "Options"
+
+// System Info menu item in "Options" menu pane
+//
+#define qtn_systemInfo "System Info"
+
+// Log Status title in the Settings dialog
+//
+#define qtn_logstatus "Log Status"
+
+// Record input menu item in the "Options" menu pane
+//
+#define qtn_recordkeys "Record input"
+
+// Random Test Run menu item in "Options" menu pane
+//
+#define qtn_randomtest_start "Random test run"
+
+// application resource identifier
+//
+#define qtn_user "USER"
+
+// confirmation to overwrite the existing file
+//
+#define qtn_confirmation_overwrite_file "File already exists..Do you wish to overwrite?"
+
+// Binary pop up option ON
+//
+#define qtn_on "On"
+
+// Binary pop up option OFF
+//
+#define qtn_off "Off"
+
+// Binary pop up options 
+//
+#define qtn_binary_options "Binary Options"
+
+// Label for scripts path in settings dialog
+//
+#define qtn_scripts_path "Scripts Path"
+
+// Label for log path in settings dialog
+//
+#define qtn_log_path "Log File Path"
+
+// Label for random test in settings dialog 
+//
+#define qtn_random_test "Target for Random Test?"
+
+// Label of application appuids
+//
+#define qtn_appid "App IDs of Random Test"
+
+// Label to Mark scripts
+//
+#define qtn_mark "Mark"
+// Label to Mark all scripts
+//
+#define qtn_markall "Mark All"
+// Label to Un Mark scripts
+//
+#define qtn_unmark  "Unmark"
+// Label to Un Mark all scripts
+//
+#define qtn_unmarkall "Unmark all"
+
+// Icon file location
+//
+#define qtn_caption_iconfile "\\resource\\apps\\UserEmulator_0x2001C3AF.mif"
+// String representing the system details format
+//
+rls_string qtn_format_system_details "OS-Version: %S"<0x2028>"UI-Version: %S"<0x2028>"Machine ID: %S"<0x2028>"IMEI No: %S"<0x2028>"Family: %S %d"<0x2028>"CPU: %S"<0x2028>"CPUSpeed: %d Mhz"<0x2028>"Startup reason: %S boot"<0x2028>"RAM: %d (%d MB)"<0x2028>"Free RAM: %d (%.2f MB)"<0x2028>"ROM: %d (%d MB)"
+rls_string qtn_format_system_details_file "%S,%S,%S,%S,%S %d,%S,%d,%S,%d (%d MB),%d (%.2f MB),%d (%d MB)\n"
+
+// End of File

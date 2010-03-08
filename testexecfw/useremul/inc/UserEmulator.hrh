@@ -1,0 +1,73 @@
+/*------------------------------------------------------------------
+ -
+ * Software Name : UserEmulator
+ * Version       : v4.2.1309
+ * 
+ * Copyright (c) 2009 France Telecom. All rights reserved.
+ * This software is distributed under the License 
+ * "Eclipse Public License - v 1.0" the text of which is available
+ * at the URL "http://www.eclipse.org/legal/epl-v10.html".
+ *
+ * Initial Contributors:
+ * France Telecom 
+ *
+ * Contributors:
+ *------------------------------------------------------------------
+ -
+ * File Name: UserEmulator.hrh
+ * 
+ * Created: 13/08/2009
+ * Author(s): Marcell Kiss, Reshma Sandeep Das
+ *   
+ * Description:
+ * This file contains declarations for constants of UserEmulator.
+ * The file can be included in C++ or resource file.
+ *------------------------------------------------------------------
+ -
+ *
+ */
+
+#ifndef USEREMULATOR_HRH__
+#define USEREMULATOR_HRH__
+
+#define _UID3 0x2001C3AF
+
+/** User Emulator Menu commands */
+enum TUserEmulatorIds
+{
+	ERunScripts= 0x6001, // start value must not be 0,
+	EHelp,
+	EAbout,
+	ESettings,
+	ERecordKeys,
+	ERandomTestStart,
+	ESettingsPath,
+	ECmdOpen,
+	ECtGeneralId,
+	EMenuSelectCmdId,
+	ESelectRunScript,
+	ESystemInfo,
+	EViewLogs,
+	EConfirmationQuery,	
+	EMark,
+	EMarkAll,
+	EUnmark,
+	EUnmarkAll
+};
+
+/** User Emulator View Ids */
+enum TViewId
+{
+    EScriptsView = 1
+};
+
+/** Script execution status */
+enum TScriptStatus
+{
+	EScriptPassed = 1,
+	EScriptFailed,
+	EScriptCancelled,
+	EScriptUnMark
+};
+
+#endif // USEREMULATOR_HRH__
