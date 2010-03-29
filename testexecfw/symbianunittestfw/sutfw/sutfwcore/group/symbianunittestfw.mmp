@@ -45,7 +45,7 @@ USERINCLUDE   ../sutfwframework/inc
 USERINCLUDE   ../sutfwoutput/inc
 USERINCLUDE   ../../inc
 
-SYSTEMINCLUDE /epoc32/include
+APP_LAYER_SYSTEMINCLUDE_SYMBIAN
 SYSTEMINCLUDE /epoc32/include/symbianunittest
 
 LIBRARY       euser.lib

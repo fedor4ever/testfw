@@ -15,8 +15,8 @@
 *
 */
 
-#ifndef UT_SYMBIANUNITTESTFAILURE_H
-#define UT_SYMBIANUNITTESTFAILURE_H
+#ifndef UT_SYMBIANUNITTESTOTHER_H
+#define UT_SYMBIANUNITTESTOTHER_H
 
 // INCLUDES
 #include <symbianunittest.h>
@@ -25,23 +25,23 @@
 class CSymbianUnitTestFailure;
 
 // CLASS DECLARATION
-NONSHARABLE_CLASS( UT_CSymbianUnitTestFailure ) : public CSymbianUnitTest
+NONSHARABLE_CLASS( UT_CSymbianUnitTestOther ) : public CSymbianUnitTest
     {
     public: // Constructors and destructor
     
-        static UT_CSymbianUnitTestFailure* NewL();
-        static UT_CSymbianUnitTestFailure* NewLC();
-        ~UT_CSymbianUnitTestFailure();
+        static UT_CSymbianUnitTestOther* NewL();
+        static UT_CSymbianUnitTestOther* NewLC();
+        ~UT_CSymbianUnitTestOther();
     
     protected: // Test functions
     
-        void SetupL();
-        void Teardown();        
+        /*void SetupL();
+        void Teardown();        */
         void UT_GettersL();
 
     private: // Contructors
         
-        UT_CSymbianUnitTestFailure();
+        UT_CSymbianUnitTestOther();
         void ConstructL();        
         
     private: // Data
@@ -49,4 +49,4 @@ NONSHARABLE_CLASS( UT_CSymbianUnitTestFailure ) : public CSymbianUnitTest
         CSymbianUnitTestFailure* iUnitTestFailure;
     };
 
-#endif // UT_SYMBIANUNITTESTFAILURE_H
+#endif // UT_SYMBIANUNITTESTOTHER_H

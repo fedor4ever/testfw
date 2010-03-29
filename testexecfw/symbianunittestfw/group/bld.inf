@@ -17,4 +17,3 @@
 
 #include "../symbianunittestfw_pub/group/bld.inf"
 #include "../sutfw/group/bld.inf"
-

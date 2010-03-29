@@ -67,4 +67,10 @@ EXPORTS
 	_ZThn4_N21CSymbianUnitTestSuiteD1Ev @ 66 NONAME
 	_ZThn4_NK16CSymbianUnitTest4NameEv @ 67 NONAME
 	_ZThn4_NK21CSymbianUnitTestSuite4NameEv @ 68 NONAME
+	_ZN16CSymbianUnitTest13AssertEqualsLERK6TDesC8S2_iS2_S2_ @ 69 NONAME
+	_ZN16CSymbianUnitTest13AssertEqualsLERK7TDesC16S2_iRK6TDesC8S5_ @ 70 NONAME
+	_ZN16CSymbianUnitTest13AssertEqualsLEiiiRK6TDesC8S2_ @ 71 NONAME
+	_ZN21CSymbianUnitTestSuite10ConstructLERK7TDesC16 @ 72 NONAME
+	_ZN21CSymbianUnitTestSuiteC1Ev @ 73 NONAME
+	_ZN21CSymbianUnitTestSuiteC2Ev @ 74 NONAME
 

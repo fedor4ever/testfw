@@ -40,6 +40,7 @@ class CSymbianUnitTestFileOutputWriter : public CBase
         void WriteDateAndTimeL();
         void WriteL( const TDesC8& aValue );
         void WriteL( const TDesC8& aFormat, TInt aValue );
+        void WriteL( const TDesC& aValue);
     
     private: // Constructors
     

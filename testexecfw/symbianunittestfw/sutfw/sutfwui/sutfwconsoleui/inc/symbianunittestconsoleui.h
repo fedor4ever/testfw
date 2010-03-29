@@ -34,11 +34,11 @@ class CSymbianUnitTestConsoleUi :
     {
     public: // Constructors and destructor
     
-        static CSymbianUnitTestConsoleUi* NewLC( CConsoleBase& aConsole );
-        static CSymbianUnitTestConsoleUi* NewL( CConsoleBase& aConsole );
+        static CSymbianUnitTestConsoleUi* NewLC();
+        static CSymbianUnitTestConsoleUi* NewL();
         ~CSymbianUnitTestConsoleUi();
     
-    public: // From CActive
+    protected: // From CActive
         
         void RunL();
         void DoCancel();
@@ -51,7 +51,7 @@ class CSymbianUnitTestConsoleUi :
     
     private: // Constructors
     
-        CSymbianUnitTestConsoleUi( CConsoleBase& aConsole );
+        CSymbianUnitTestConsoleUi();
         void ConstructL();
         
     private: // New functions
@@ -60,7 +60,7 @@ class CSymbianUnitTestConsoleUi :
         
     private: // Data
     
-        CConsoleBase& iConsole;
+        CConsoleBase* iConsole;
         CSymbianUnitTestCommandLineParser* iCommandLineParser;
         CSymbianUnitTestRunner* iTestRunner;
         TInt iExecutedTestCount;

@@ -48,7 +48,59 @@ EXPORT_C void CSymbianUnitTest::ConstructL( const TDesC8& aName )
         {
         classNamePtr.Set( aName.Left( doubleColonPos ) );
         }
-    iName = CnvUtfConverter::ConvertToUnicodeFromUtf8L( classNamePtr );
+    
+    iName = CnvUtfConverter::ConvertToUnicodeFromUtf8L( classNamePtr ); 
+    
+    SUT_LOG_FORMAT(_L("enter CSymbianUnitTest::ConstructL -- aName : [%S]"), iName );
+    
+    // unify the same name for armv5 & winscw. 
+    // on winscw, the function name is abc, 
+    // on armv5,  the function name is void abc. 
+    // unify to abc. 
+    TChar chSpace( ' ' );
+    TChar chTab( '\t' );
+    TChar chAsterisk( '*' );
+    TChar chAnd( '&' );
+    TBuf<100> strTmp( *iName ); 
+    strTmp.Trim();
+    TInt pos;
+    
+    // "char * & abc" => abc
+    pos = strTmp.LocateReverse( chAnd );
+    if( KErrNotFound != pos ) 
+    	{
+    	TPtrC ptr = strTmp.Right( strTmp.Length() - pos - 1 );
+    	strTmp = ptr;
+    	strTmp.Trim();
+    	}
+    // "void * abc" => abc
+    pos = strTmp.LocateReverse( chAsterisk );
+    if( KErrNotFound != pos ) 
+    	{
+    	TPtrC ptr = strTmp.Right( strTmp.Length() - pos - 1 );
+    	strTmp = ptr;
+    	strTmp.Trim();
+    	}
+    // "void abc"
+    pos = strTmp.LocateReverse( chSpace );
+    if( KErrNotFound != pos ) 
+    	{
+    	TPtrC ptr = strTmp.Right( strTmp.Length() - pos - 1 );
+    	strTmp = ptr;
+    	strTmp.Trim();
+    	}
+    // "void 	abc"
+    pos = strTmp.LocateReverse( chTab );
+    if( KErrNotFound != pos ) 
+    	{
+    	TPtrC ptr = strTmp.Right( strTmp.Length() - pos - 1 );
+    	strTmp = ptr;
+    	strTmp.Trim();
+    	}
+    	
+    *iName = strTmp;
+    
+    SUT_LOG_FORMAT(_L("exit CSymbianUnitTest::ConstructL -- aName : [%S]"), iName );
     }
 
 // -----------------------------------------------------------------------------
@@ -329,6 +381,61 @@ EXPORT_C void CSymbianUnitTest::AssertionFailedL(
     iHeapCellsReservedByAssertFailure = 
         heapCellsAfterAddingTheFailure - heapCellsBeforeAddingTheFailure;
     User::Leave( KErrSymbianUnitTestAssertionFailed );
+    }
+
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+//
+EXPORT_C void CSymbianUnitTest::AssertEqualsL(
+    TInt aExpectedValue, 
+    TInt aActualValue, 
+    TInt aLineNumber,
+    const TDesC8& aFileName,
+    const TDesC8& aFailureMessage )
+    {
+    if ( aExpectedValue != aActualValue )
+        {
+        StopAllocFailureSimulation();
+        AssertionFailedL( aFailureMessage, aLineNumber, aFileName );
+        }
+    }
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+//
+EXPORT_C void CSymbianUnitTest::AssertEqualsL(
+    const TDesC8& aExpectedValue,
+    const TDesC8& aActualValue,
+    TInt aLineNumber,
+    const TDesC8& aFileName,
+    const TDesC8& aFailureMessage )
+    {
+    if ( aExpectedValue.Compare( aActualValue ) != 0 )
+        {
+        StopAllocFailureSimulation();
+        AssertionFailedL( aFailureMessage, aLineNumber, aFileName );
+        }
+    }
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+//
+EXPORT_C void CSymbianUnitTest::AssertEqualsL(
+    const TDesC16& aExpectedValue,
+    const TDesC16& aActualValue,
+    TInt aLineNumber,
+    const TDesC8& aFileName,
+    const TDesC8& aFailureMessage )
+    {
+    if ( aExpectedValue.Compare( aActualValue ) != 0 )
+        {
+        StopAllocFailureSimulation();
+        AssertionFailedL( aFailureMessage, aLineNumber, aFileName );
+        }
     }
 
 // -----------------------------------------------------------------------------

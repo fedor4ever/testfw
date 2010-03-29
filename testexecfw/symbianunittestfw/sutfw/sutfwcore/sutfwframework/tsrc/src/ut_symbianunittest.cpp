@@ -15,6 +15,7 @@
 *
 */
 
+#include "sutlogger.h"
 #include "ut_symbianunittest.h"
 #include "symbianunittestresult.h"
 #include <symbianunittestmacros.h>
@@ -48,6 +49,8 @@ UT_CSymbianUnitTest* UT_CSymbianUnitTest::NewLC()
 //
 UT_CSymbianUnitTest::UT_CSymbianUnitTest()
     {
+    SUT_LOG_DEBUG( "Entering UT_CSymbianUnitTest::UT_CSymbianUnitTest()" )
+    SUT_LOG_DEBUG( "Exiting UT_CSymbianUnitTest::UT_CSymbianUnitTest()" )
     }
 
 // ---------------------------------------------------------------------------
@@ -57,12 +60,16 @@ UT_CSymbianUnitTest::UT_CSymbianUnitTest()
 void UT_CSymbianUnitTest::ConstructL()
     {
     BASE_CONSTRUCT
+    
+    DEFINE_TEST_CLASS( UT_CSymbianUnitTest )
+    
     ADD_SUT_WITH_SETUP_AND_TEARDOWN( SetupL, UT_NameL, Teardown )
     ADD_SUT( UT_IsMemoryAllocationFailureSimulationUsedL )
     ADD_SUT( UT_PanicInTestL )
     ADD_SUT( UT_ErrorInSetupL )
     ADD_SUT( UT_LeaveInTestL )
-    ADD_SUT( UT_MemoryLeakInTestL )
+    ADD_SUT( UT_MemoryLeakInTestL ) 
+    ADD_SUT( UT_EqualsAssertsL )
     ADD_SUT( UT_FailingAssertsL )
     ADD_SUT( UT_PassingAssertsL )
     ADD_SUT( UT_TestCaseNamesL )
@@ -148,9 +155,9 @@ void UT_CSymbianUnitTest::UT_PanicInTestL()
     _LIT( KTestName, "PanicInTest" );
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulatePanicL ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulatePanicL ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
     
     // Without memory allocation failure simulation
     iUnitTest->ExecuteL( *this, *iTestResult, ENoFailureSimulation, *iTestCaseNames, 0 );
@@ -175,9 +182,9 @@ void UT_CSymbianUnitTest::UT_ErrorInSetupL()
     _LIT( KTestName, "ErrorInSetup" );
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( SimulateLeaveL ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateLeaveL ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
     
     // Without memory allocation failure simulation
     iUnitTest->ExecuteL( *this, *iTestResult, ENoFailureSimulation, *iTestCaseNames, 0 );
@@ -202,9 +209,9 @@ void UT_CSymbianUnitTest::UT_LeaveInTestL()
     _LIT( KTestName, "LeaveInTest" );
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateLeaveL ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateLeaveL ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
     
     // Without memory allocation failure simulation
     iUnitTest->ExecuteL( *this, *iTestResult, ENoFailureSimulation, *iTestCaseNames, 0);
@@ -229,9 +236,9 @@ void UT_CSymbianUnitTest::UT_MemoryLeakInTestL()
     _LIT( KTestName, "MemoryLeakInTest" );
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateMemoryLeakL ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateMemoryLeakL ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
     
     // Without memory allocation failure simulation
     iUnitTest->ExecuteL( *this, *iTestResult, ENoFailureSimulation, *iTestCaseNames, 0 );
@@ -248,6 +255,66 @@ void UT_CSymbianUnitTest::UT_MemoryLeakInTestL()
 //
 // ---------------------------------------------------------------------------
 //
+void UT_CSymbianUnitTest::UT_EqualsAssertsL()
+	{
+	SUT_ASSERT_EQUALS( 0, iTestResult->Failures().Count() )
+    SUT_ASSERT_EQUALS( 0, iExecutedTestCount )
+    
+    _LIT( KTestName, "TestAssertEquals" );
+    
+    iUnitTest->AddTestCaseL( 
+        KTestName, 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateEqualsAssertWithStringL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
+        
+
+    iUnitTest->AddTestCaseL( 
+        KTestName, 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateEqualsAssertWithStringFailL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
+        
+        
+    iUnitTest->AddTestCaseL( 
+        KTestName, 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateEqualsAssertWithString8L ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
+        
+    iUnitTest->AddTestCaseL( 
+        KTestName, 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateEqualsAssertWithString8FailL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
+
+    iUnitTest->AddTestCaseL( 
+        KTestName, 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateEqualsAssertWithIntL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
+        
+    iUnitTest->AddTestCaseL( 
+        KTestName, 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateEqualsAssertWithIntFailL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
+
+    // Without memory allocation failure simulation
+    iUnitTest->ExecuteL( *this, *iTestResult, ENoFailureSimulation, *iTestCaseNames, 0 );
+    SUT_ASSERT_EQUALS( 3, iTestResult->Failures().Count() )
+    SUT_ASSERT_EQUALS( 6, iExecutedTestCount )
+    
+    // With memory allocation failure simulation
+    iUnitTest->ExecuteL( *this, *iTestResult, EMemAllocFailureSimulation, *iTestCaseNames, 0 );
+    SUT_ASSERT_EQUALS( 6, iTestResult->Failures().Count() )
+    SUT_ASSERT_EQUALS( 12, iExecutedTestCount )
+	}
+
+// ---------------------------------------------------------------------------
+//
+// ---------------------------------------------------------------------------
+//
 void UT_CSymbianUnitTest::UT_FailingAssertsL()
     {
     SUT_ASSERT_EQUALS( 0, iTestResult->Failures().Count() )
@@ -256,34 +323,34 @@ void UT_CSymbianUnitTest::UT_FailingAssertsL()
     _LIT( KTestName, "TestAssertFailures" );
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateFailingAssertL ),
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateFailingAssertL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateFailingAssertWithIntsL ),
-        CSymbianUnitTest::FunctionPtr( Dummy ) );   
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateFailingAssertWithIntsL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );   
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateFailingAssertWithDesC8sL ),
-        CSymbianUnitTest::FunctionPtr( Dummy ) );    
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateFailingAssertWithDesC8sL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );    
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateFailingAssertWithDesC16sL ),
-        CSymbianUnitTest::FunctionPtr( Dummy ) ); 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateFailingAssertWithDesC16sL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) ); 
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateFailingAssertLeaveL ),
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateFailingAssertLeaveL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateFailingAssertLeaveWithSpecificValueL ),
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateFailingAssertLeaveWithSpecificValueL ),
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
     
     // Without memory allocation failure simulation
     iUnitTest->ExecuteL( *this, *iTestResult, ENoFailureSimulation, *iTestCaseNames, 0 );
@@ -303,6 +370,7 @@ void UT_CSymbianUnitTest::UT_FailingAssertsL()
 void UT_CSymbianUnitTest::UT_PassingAssertsL()
     {
     SUT_ASSERT( ETrue )
+    SUT_ASSERT_DESC( ETrue, "test assert with desc")
     SUT_ASSERT( ETrue == ETrue )
     SUT_ASSERT( 1 == 1 )
     HBufC* ptr( NULL );
@@ -312,10 +380,10 @@ void UT_CSymbianUnitTest::UT_PassingAssertsL()
     CleanupStack::PopAndDestroy( ptr );
     
     SUT_ASSERT_EQUALS( 1, 1 )
+    SUT_ASSERT_EQUALS_DESC( 1, 1, "test assert equals with desc" )
     SUT_ASSERT_EQUALS( KNullDesC8, KNullDesC8 )
     SUT_ASSERT_EQUALS( KNullDesC, KNullDesC )
     
-    SUT_ASSERT_LEAVE( User::Leave( KErrNone ) )
     SUT_ASSERT_LEAVE( User::Leave( KErrGeneral ) )
     
     SUT_ASSERT_LEAVE_WITH( User::Leave( KErrGeneral ), KErrGeneral )
@@ -334,23 +402,23 @@ void UT_CSymbianUnitTest::UT_TestCaseNamesL()
     _LIT( KTest1Name, "TestCase1" );
     iUnitTest->AddTestCaseL( 
         KTest1Name, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateLeaveL ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateLeaveL ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
 
     _LIT( KTest2Name, "TestCase2" );
     iUnitTest->AddTestCaseL( 
         KTest2Name, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateLeaveL ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateLeaveL ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
 
     _LIT( KTest3Name, "TestCase3" );
     iUnitTest->AddTestCaseL( 
         KTest3Name, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateLeaveL ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateLeaveL ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
 
     _LIT( LTest1FullName, "UT_CSymbianUnitTest::TestCase1");
     iTestCaseNames->AppendL(LTest1FullName);
@@ -370,9 +438,9 @@ void UT_CSymbianUnitTest::UT_TimeoutL()
     _LIT( KTestName, "TimeoutTestCase" );
     iUnitTest->AddTestCaseL( 
         KTestName, 
-        CSymbianUnitTest::FunctionPtr( Dummy ), 
-        CSymbianUnitTest::FunctionPtr( SimulateTimeoutL ), 
-        CSymbianUnitTest::FunctionPtr( Dummy ) );
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::SimulateTimeoutL ), 
+        CSymbianUnitTest::FunctionPtr( &UT_CSymbianUnitTest::Dummy ) );
     //run test case without timeout control
     iUnitTest->ExecuteL( *this, *iTestResult, ENoFailureSimulation, *iTestCaseNames, 0 );
     SUT_ASSERT_EQUALS( 0, iTestResult->Failures().Count() )
@@ -399,8 +467,8 @@ void UT_CSymbianUnitTest::SimulateTimeoutL()
 //
 void UT_CSymbianUnitTest::SimulatePanicL()
     {
-    HBufC* tmp( NULL );
-    tmp->Length();
+    _LIT( KPanicString, "kkkkkkkkkkkk");
+    TBufC<3> buf( KPanicString );
     }
 
 // ---------------------------------------------------------------------------
@@ -486,3 +554,63 @@ void UT_CSymbianUnitTest::SimulateFailingAssertLeaveWithSpecificValueL()
 void UT_CSymbianUnitTest::Dummy()
     {
     }
+
+// ---------------------------------------------------------------------------
+//
+// ---------------------------------------------------------------------------
+//
+void UT_CSymbianUnitTest::SimulateEqualsAssertWithStringL()
+	{
+	_LIT( KSomeText, "some text" );
+    AssertEqualsL( KSomeText, KSomeText, __LINE__, _L8( __FILE__ ) );	
+	}
+
+// ---------------------------------------------------------------------------
+//
+// ---------------------------------------------------------------------------
+//
+void UT_CSymbianUnitTest::SimulateEqualsAssertWithStringFailL()
+	{
+	_LIT( KSomeText, "some text" );
+    AssertEqualsL( KNullDesC, KSomeText, __LINE__, _L8( __FILE__ ) );	
+	}
+
+// ---------------------------------------------------------------------------
+//
+// ---------------------------------------------------------------------------
+//
+void UT_CSymbianUnitTest::SimulateEqualsAssertWithString8L()
+	{
+	_LIT8( KSomeText, "some text" );
+    AssertEqualsL( KSomeText, KSomeText, __LINE__, _L8( __FILE__ ) );	
+	}
+
+// ---------------------------------------------------------------------------
+//
+// ---------------------------------------------------------------------------
+//
+void UT_CSymbianUnitTest::SimulateEqualsAssertWithString8FailL()
+	{
+	_LIT8( KSomeText, "some text" );
+    AssertEqualsL( KNullDesC8, KSomeText, __LINE__, _L8( __FILE__ ) );	
+	}
+	
+// ---------------------------------------------------------------------------
+//
+// ---------------------------------------------------------------------------
+//
+void UT_CSymbianUnitTest::SimulateEqualsAssertWithIntL()
+	{
+	const TInt KAssertValue(123);
+	AssertEqualsL( 123, KAssertValue, __LINE__, _L8( __FILE__ ) );	
+	}
+	
+// ---------------------------------------------------------------------------
+//
+// ---------------------------------------------------------------------------
+//
+void UT_CSymbianUnitTest::SimulateEqualsAssertWithIntFailL()
+	{
+	const TInt KAssertValue(123);
+	AssertEqualsL( -1, KAssertValue, __LINE__, _L8( __FILE__ ) );	
+	}

@@ -16,6 +16,7 @@
 */
 
 #include "ut_symbianunittestcommandlineparser.h"
+#include <symbianunittestsuite.h>
 
 
 // Exactly one exported function returning 
@@ -23,7 +24,14 @@
 //
 EXPORT_C MSymbianUnitTestInterface* CreateTestL()
     {
-    return UT_CSymbianUnitTestCommandLineParser::NewL();
+    CSymbianUnitTestSuite* testSuite = 
+        CSymbianUnitTestSuite::NewLC( _L("ut_consoleui") );
+
+    testSuite->AddL( UT_CSymbianUnitTestCommandLineParser::NewLC() );
+    CleanupStack::Pop();
+
+    // Add more tests to the test suite here when testing multiple classes
+
+    CleanupStack::Pop( testSuite );
+    return testSuite;
     }
-
-

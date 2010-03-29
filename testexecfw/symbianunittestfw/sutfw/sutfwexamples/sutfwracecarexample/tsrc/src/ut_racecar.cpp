@@ -62,6 +62,9 @@ UT_CRaceCar::UT_CRaceCar()
 void UT_CRaceCar::ConstructL()
     {
     BASE_CONSTRUCT
+    
+    DEFINE_TEST_CLASS( UT_CRaceCar )
+    
     ADD_SUT( UT_FuelL )
     ADD_SUT( UT_SteeringL )
     ADD_SUT( UT_SpeedL ) 

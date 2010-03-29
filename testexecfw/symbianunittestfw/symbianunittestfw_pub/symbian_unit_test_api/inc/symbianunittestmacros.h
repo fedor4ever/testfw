@@ -24,6 +24,27 @@
 // MACROS
 #ifdef SYMBIAN_UNIT_TEST
 
+    inline TInt operator==( TTrue, TInt aInt )
+        {
+        return aInt;
+        }
+
+    inline TInt operator==( TInt aInt, TTrue )
+        {
+        return aInt;
+        }
+
+    inline TInt operator!=( TTrue, TInt aInt )
+        {
+        return !aInt;
+        }
+
+    inline TInt operator!=( TInt aInt, TTrue )
+        {
+        return !aInt;
+        }
+
+    
     /** 
     * Calls the base class constructor that sets the name of unit test.
     */
@@ -35,12 +56,23 @@
     * The default setup and teardown functions will be used.
     * @param aTestPtr a function pointer to the unit test case
     */
-    #define ADD_SUT( aTestPtr )\
-        AddTestCaseL(\
-            _L( #aTestPtr ),\
-            CSymbianUnitTest::FunctionPtr( SetupL ),\
-            CSymbianUnitTest::FunctionPtr( aTestPtr ),\
-            CSymbianUnitTest::FunctionPtr( Teardown ) );
+    #ifndef __GCCE__
+        #define ADD_SUT( aTestPtr )\
+            AddTestCaseL(\
+                _L( #aTestPtr ),\
+                CSymbianUnitTest::FunctionPtr( SetupL ),\
+                CSymbianUnitTest::FunctionPtr(aTestPtr),\
+                CSymbianUnitTest::FunctionPtr( Teardown ) );
+            
+    #else
+        #define ADD_SUT( aTestPtr )\
+            AddTestCaseL(\
+                _L( #aTestPtr ),\
+                CSymbianUnitTest::FunctionPtr( &CSymbianUnitTest::SetupL ),\
+                CSymbianUnitTest::FunctionPtr(&TYPE::aTestPtr),\
+                CSymbianUnitTest::FunctionPtr( &CSymbianUnitTest::Teardown ) );
+    #endif
+            
 
     /**
     * Adds a new unit test case to this unit test.
@@ -51,12 +83,22 @@
     * @param aTeardownPtr a function pointer to the teardown function
     *        that will be executed after the actual unit test case
     */
-    #define ADD_SUT_WITH_SETUP_AND_TEARDOWN( aSetupPtr, aTestPtr, aTeardownPtr )\
-        AddTestCaseL(\
-            _L( #aTestPtr ),\
-            CSymbianUnitTest::FunctionPtr( aSetupPtr ),\
-            CSymbianUnitTest::FunctionPtr( aTestPtr ),\
-            CSymbianUnitTest::FunctionPtr( aTeardownPtr ) );
+    #ifndef __GCCE__
+        #define ADD_SUT_WITH_SETUP_AND_TEARDOWN( aSetupPtr, aTestPtr, aTeardownPtr )\
+            AddTestCaseL(\
+                _L( #aTestPtr ),\
+                CSymbianUnitTest::FunctionPtr( aSetupPtr ),\
+                CSymbianUnitTest::FunctionPtr( aTestPtr ),\
+                CSymbianUnitTest::FunctionPtr( aTeardownPtr ) );
+     #else
+         #define ADD_SUT_WITH_SETUP_AND_TEARDOWN( aSetupPtr, aTestPtr, aTeardownPtr )\
+            AddTestCaseL(\
+                _L( #aTestPtr ),\
+                CSymbianUnitTest::FunctionPtr( &TYPE::aSetupPtr ),\
+                CSymbianUnitTest::FunctionPtr( &TYPE::aTestPtr ),\
+                CSymbianUnitTest::FunctionPtr( &TYPE::aTeardownPtr ) );
+     
+     #endif
 
     /**
     * Asserts a condition in a unit test case.
@@ -66,11 +108,31 @@
     * the failure reason, line number and file name to the test results.
     * @param aCondition the asserted condition.
     */
+    
+       
     #define SUT_ASSERT( aCondition )\
-        if ( !TBool( aCondition ) )\
+        if ( aCondition ) {} else\
             {\
             AssertionFailedL( _L8( #aCondition ), __LINE__, _L8( __FILE__ ) );\
             }
+
+   /**
+    * Asserts a condition in a unit test case.
+    * Leaves with a Symbian unit test framework specific error code
+    * if the condition evaluates to EFalse.
+    * In case of a failed assertion, the framework records 
+    * the failure reason, line number and file name to the test results.
+    * @param aCondition the asserted condition.
+    * @param aDescription the error description
+    */
+    
+       
+    #define SUT_ASSERT_DESC( aCondition, aDescription )\
+        if ( aCondition ) {} else\
+            {\
+            AssertionFailedL( _L8( aDescription ), __LINE__, _L8( __FILE__ ) );\
+            }
+
 
     /**
     * Asserts that two values are equal.
@@ -83,6 +145,19 @@
     */
     #define SUT_ASSERT_EQUALS( aExpected, aActual )\
         AssertEqualsL( aExpected, aActual, __LINE__, _L8( __FILE__ ) );
+
+    /**
+    * Asserts that two values are equal.
+    * Leaves with a Symbian unit test framework specific error code
+    * if the values are not equal.
+    * In case of a failed assertion, the framework records 
+    * the failure reason, line number and file name to the test results.
+    * @param aExpectedValue the expected value
+    * @param aActualValue the actual value
+    * @param aDescription the error description
+    */
+    #define SUT_ASSERT_EQUALS_DESC( aExpected, aActual, aDescription )\
+        AssertEqualsL( aExpected, aActual, __LINE__, _L8( __FILE__ ), _L8(aDescription) );
 
     /**
     * Asserts that a statement leaves an expected value.
@@ -117,18 +192,23 @@
     #define SUT_ASSERT_LEAVE( aStatement )\
         {\
         TInt KLine( __LINE__ );\
-        TBool leaveOccured( ETrue );\
-        TRAPD( err, aStatement; leaveOccured = EFalse; )\
-        if ( !leaveOccured )\
+        TRAPD( err, aStatement)\
+        if ( err==KErrNone )\
             {\
             RecordNoLeaveFromStatementL( _L8( #aStatement ), KLine, _L8( __FILE__ ) );\
             }\
         }
+        
 
     /**
     * Can be used to hide the friend declaration for a unit test class.
     */
     #define SYMBIAN_UNIT_TEST_CLASS( ClassName ) friend class ClassName;
+            
+    #define DEFINE_TEST_CLASS( aClassName )\
+        typedef aClassName TYPE;
+    
+    
 #else 
     #define SYMBIAN_UNIT_TEST_CLASS( ClassName )
 #endif // SYMBIAN_UNIT_TEST

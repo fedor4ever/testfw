@@ -60,6 +60,9 @@ UT_CSymbianUnitTestSuite::UT_CSymbianUnitTestSuite()
 void UT_CSymbianUnitTestSuite::ConstructL()
     {
     BASE_CONSTRUCT
+    
+    DEFINE_TEST_CLASS( UT_CSymbianUnitTestSuite )
+    
     ADD_SUT( UT_NameL )
     ADD_SUT( UT_AddL )
     }

@@ -19,6 +19,7 @@
 
 // INCLUDES
 #include <e32base.h>
+#include <badesca.h>
 #include <symbianunittestmacros.h>
 
 // FORWARD DECLARATIONS
@@ -67,6 +68,8 @@ class CSymbianUnitTestResult : public CBase
 
 	void AddTimeOutErrorL(
 	    TInt aTimeOut);
+
+	const CDesCArray& TestCaseNames() const;
         
     private: // Constructors
     
@@ -96,6 +99,7 @@ class CSymbianUnitTestResult : public CBase
         HBufC* iCurrentTestName;
 	TTime iTime;
 	TBool iCurrentResult;
+	CDesCArray * iTestCaseNames;
         
     private: // Test
         

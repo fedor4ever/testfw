@@ -17,3 +17,6 @@
 
 PRJ_MMPFILES
 symbianunittestconsoleui.mmp
+
+PRJ_TESTMMPFILES
+    #include "../tsrc/group/bld.inf"

@@ -93,10 +93,10 @@ class CSymbianUnitTestSuite : public CBase, public MSymbianUnitTestInterface
         */        
         IMPORT_C void AddL( MSymbianUnitTestInterface* aTest );        
         
-    private: // Constructors
+    protected: // Constructors
     
-        CSymbianUnitTestSuite();
-        void ConstructL( const TDesC& aName );
+        IMPORT_C CSymbianUnitTestSuite();
+        IMPORT_C void ConstructL( const TDesC& aName );
     
     private: // Data
         

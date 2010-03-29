@@ -17,6 +17,7 @@
 
 TARGET        ut_symbianunittestconsoleui.dll
 TARGETTYPE    dll
+NOEXPORTLIBRARY
 UID           0x20022E76 0x20022E76
 
 MACRO         SYMBIAN_UNIT_TEST

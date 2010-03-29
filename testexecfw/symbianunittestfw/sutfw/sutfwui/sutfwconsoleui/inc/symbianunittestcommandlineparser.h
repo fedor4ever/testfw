@@ -39,6 +39,7 @@ class CSymbianUnitTestCommandLineParser : public CBase
         const MDesCArray& TestDllNames() const;
         const CDesCArray& TestCaseNames() const;
         TBool MemoryAllocationFailureSimulation() const;
+        TBool Background() const;
         const TDesC& OutputFileName() const;
         const TDesC& OutputFormat() const;
         TInt  Timeout() const;
@@ -69,6 +70,7 @@ class CSymbianUnitTestCommandLineParser : public CBase
         TBool iAllocFailureSimulation;
         HBufC* iOutputFormat;
         TBool iNoPrompt;
+        TBool iBackground;
 	TInt iTimeout;
         
     private: // Test

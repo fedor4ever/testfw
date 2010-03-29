@@ -18,6 +18,9 @@
 use strict;
 use warnings;
 use Getopt::Long;
+#use Cwd 'abs_path';
+use Cwd;
+
 
 # Main
 my $root_dir = "";
@@ -25,9 +28,42 @@ GetOptions("dir=s" => \$root_dir);
 if ($root_dir eq "") {
     $root_dir = ".";
 }
+convert_cpp_in_directory($root_dir);
 convert_files_in_directory($root_dir);
 print "Conversion completed.\n";
 
+sub convert_cpp_in_directory {
+    my $dir_name = shift;
+    print "Opening directory: " . $dir_name . "\n";
+    opendir(DIR, $dir_name) || die "Cannot open directory " . $dir_name;
+    chdir($dir_name);
+    my @sourcefiles = readdir(DIR);
+    foreach (@sourcefiles) {
+        if ( $_ =~ /.cpp$/i ) {
+            # make the file writable (0666 is in linux/unix terms rw-)
+            chmod(0666,$_);
+            print "Converting: ";
+            print $_;
+            my $converted_file_content = "";
+            if (/.cpp$/ ) {
+                $converted_file_content = convert_source_file_content($_);
+            }
+	    open(my $result_file_handle, ">", $_) or die(". Writing " . $_ . " failed!\n");
+	    print $result_file_handle $converted_file_content;
+	    close $result_file_handle;
+            print ". Done\n";
+        }
+        elsif ( /\./ ) {
+            # Other types of files
+        }
+        else {
+            # Directories    
+            convert_cpp_in_directory($_);
+            chdir(".."); # After recursion change back to the current directory
+        }
+    }
+    closedir DIR;
+}
 
 sub convert_files_in_directory {
     my $dir_name = shift;
@@ -36,13 +72,13 @@ sub convert_files_in_directory {
     chdir($dir_name);
     my @sourcefiles = readdir(DIR);
     foreach (@sourcefiles) {
-        if ( $_ =~ /.cpp$/i || $_ =~ /.h$/i || $_ =~ /.mmp$/i || $_ =~ /.def$/i) {
+        if ( $_ =~ /.h$/i || $_ =~ /.mmp$/i || $_ =~ /.def$/i) {
             # make the file writable (0666 is in linux/unix terms rw-)
             chmod(0666,$_);
             print "Converting: ";
             print $_;
             my $converted_file_content = "";
-            if (/.cpp$/ || /.h$/) {
+            if (/.h$/) {
                 $converted_file_content = convert_source_file_content($_);
             }
             elsif (/.mmp$/) {
@@ -51,9 +87,9 @@ sub convert_files_in_directory {
             else {
                 $converted_file_content = convert_def_file_content($_);
             }
-            open(my $result_file_handle, ">", $_) or die(". Writing " . $_ . " failed!\n");
-            print $result_file_handle $converted_file_content;
-            close $result_file_handle;
+	    open(my $result_file_handle, ">", $_) or die(". Writing " . $_ . " failed!\n");
+	    print $result_file_handle $converted_file_content;
+	    close $result_file_handle;
             print ". Done\n";
         }
         elsif ( /\./ ) {
@@ -73,10 +109,26 @@ sub convert_source_file_content {
     my $file_name = shift;
     
     my $file_content = read_file_content_into_string($file_name);
+
+    #check if this source include a separate test table header file
+    #in that case, we need to insert the test table content from header first
+    if ($file_content =~ m/\#include\s*\"(.*)testtable\.h\"/) {
+	    my $curpath = cwd; 
+            my $table_file_name = $curpath . "/../inc/" . $1 . "testtable.h";
+	    print "\n    try to merge header file at: " . $table_file_name . "\n";
+            my $tabledef = read_file_content_into_string($table_file_name);
+	    #remove copyright and other comments
+            $tabledef =~ s/\/\/.*|\/\*[\s\S]*?\*\///g;
+            $tabledef =~ s/#include\s*\".*\"//g;
+            $file_content =~ s/\#include\s*\".*testtable\.h\"/$tabledef/g;  
+
+
+    }
     
     # Convert the EUnit test table to SymbianUnit tests and move it to the constructor
     my $symbianunit_constructor_content = "BASE_CONSTRUCT";
     my $converted_test_table = convert_eunit_test_table($file_content);
+    #print "converted test table: " . $converted_test_table . "\n";
     $symbianunit_constructor_content .= $converted_test_table;
     $file_content =~ s/CEUnitTestSuiteClass::ConstructL\(.*\)\;/$symbianunit_constructor_content/g;
 
@@ -88,6 +140,7 @@ sub convert_source_file_content {
     $file_content =~ s/#include <eunitmacros.h>/#include <symbianunittestmacros.h>/gi;
     $file_content =~ s/#include <ceunittestsuiteclass.h>/#include <symbianunittest.h>/gi;
     $file_content =~ s/#include <ceunittestsuite.h>/#include <symbianunittestsuite.h>/gi;
+    $file_content =~ s/#include <eunitdecorators.h>//gi;
     $file_content =~ s/CEUnitTestSuiteClass/CSymbianUnitTest/g;
     $file_content =~ s/CEUnitTestSuite/CSymbianUnitTestSuite/g;
     $file_content =~ s/MEUnitTest/MSymbianUnitTestInterface/g;  
@@ -97,6 +150,9 @@ sub convert_source_file_content {
     $file_content =~ s/EUNIT_ASSERT_EQUALS/SUT_ASSERT_EQUALS/g;
     $file_content =~ s/EUNIT_ASSERT_NO_LEAVE//g;
     $file_content =~ s/EUNIT_ASSERT/SUT_ASSERT/g;
+    $file_content =~ s/EUNIT_ASSERT_DESC/SUT_ASSERT_DESC/g;
+    $file_content =~ s/EUNIT_ASSERT_EQUALS_DESC/SUT_ASSERT_EQUALS_DESC/g;
+    $file_content =~ s/EUNIT_PRINT/\/\/EUNIT_PRINT/g;
 
     return $file_content;
 }
@@ -108,7 +164,9 @@ sub convert_mmp_file_content {
     my $file_content = read_file_content_into_string($file_name);
 
     $file_content =~ s/eunit.lib/symbianunittestfw.lib/gi;
+    $file_content =~ s/eunitutil.lib//gi;
     $file_content =~ s/\/epoc32\/include\/Digia\/EUnit/\/epoc32\/include\/symbianunittest/gi;
+    $file_content =~ s/\/epoc32\/include\/platform\/Digia\/EUnit/\/epoc32\/include\/symbianunittest/gi;
     $file_content =~ s/TARGETPATH(.*)\/DigiaEUnit\/Tests//gi;
     $file_content =~ s/UID(.*)0x1000af5a/MACRO SYMBIAN_UNIT_TEST\nUID 0x20022E76/gi;
 

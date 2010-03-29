@@ -136,11 +136,14 @@ EXPORT_C void CSymbianUnitTestRunner::ExecuteTestsL(
         {
         TPtrC16 testDllName( aTestDllNames.MdcaPoint( i ) );
         RLibrary library;
-        if ( library.Load( testDllName ) != KErrNone )
+        TInt ret;
+        ret = library.Load( testDllName );
+        if ( ret != KErrNone )
             {
             iUiCallBack.InfoMsg( KFailedToFindDll, testDllName );
-	    SUT_LOG_FORMAT(KFailedToFindDll, &testDllName);
-            User::Leave( KErrNotFound );
+            SUT_LOG_FORMAT(KFailedToFindDll, &testDllName);
+            //User::Leave( KErrNotFound );
+            User::Leave( ret );
             } 
         CleanupClosePushL( library );
         // The second UID of the dll to be used must be compatible

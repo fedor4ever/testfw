@@ -19,6 +19,7 @@
 #include "symbianunittestfailure.h"
 #include "sutlogger.h"
 
+
 _LIT8( KSymbianUnitTestLeaveCodeMessageFormat, "Leave code: %d" );
 _LIT8( KSymbianUnitTestMemoryLeakPhrase, "Leaked %d bytes of memory" );
 _LIT8( KSymbianUnitTestPanicPhrase, "Panic: " );
@@ -72,6 +73,7 @@ CSymbianUnitTestResult::CSymbianUnitTestResult()
 void CSymbianUnitTestResult::ConstructL()
     {
     iCurrentTestName = KNullDesC().AllocL();
+    iTestCaseNames = new (ELeave)CDesCArrayFlat(10);
     }
 
 // -----------------------------------------------------------------------------
@@ -81,6 +83,7 @@ void CSymbianUnitTestResult::ConstructL()
 CSymbianUnitTestResult::~CSymbianUnitTestResult()
     {
     delete iCurrentTestName;
+    delete iTestCaseNames;
     iFailures.ResetAndDestroy();
     }
 
@@ -141,7 +144,11 @@ void CSymbianUnitTestResult::EndTestL()
     SUT_LOG_FORMAT2(_L("EndCase Result[%S] Time[%d]ms"), 
         iCurrentResult?&KSymbianUnitTestPass:&KSymbianUnitTestFail,
 	microSeconds.Int64()/1000);
-    //SUT_LOG_FORMAT2(_L("EndCase Result[%S] Time[%d]ms"), &KSymbianUnitTestPass, microSeconds.Int64()/1000);
+    if (iCurrentResult)
+        {
+        //only add passed case to the testcasenames
+        iTestCaseNames->AppendL(*iCurrentTestName);
+        }
     }
 
 
@@ -316,4 +323,13 @@ void CSymbianUnitTestResult::AddFailureL(
     iCurrentResult = EFalse;
     iFailures.AppendL( failure );
     CleanupStack::Pop( failure ); 
+    }
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+//
+const CDesCArray& CSymbianUnitTestResult::TestCaseNames() const
+    {
+    return *iTestCaseNames;
     }

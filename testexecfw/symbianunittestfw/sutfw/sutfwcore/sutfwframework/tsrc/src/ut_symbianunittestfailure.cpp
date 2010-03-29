@@ -64,6 +64,9 @@ UT_CSymbianUnitTestFailure::UT_CSymbianUnitTestFailure()
 void UT_CSymbianUnitTestFailure::ConstructL()
     {
     BASE_CONSTRUCT
+    
+    DEFINE_TEST_CLASS( UT_CSymbianUnitTestFailure )
+    
     ADD_SUT( UT_GettersL )
     }
 

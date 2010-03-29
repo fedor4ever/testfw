@@ -60,9 +60,14 @@ void UT_CSymbianUnitTestCommandLineParser::ConstructL()
     {
     BASE_CONSTRUCT
     
+    DEFINE_TEST_CLASS( UT_CSymbianUnitTestCommandLineParser )
+    
     ADD_SUT( UT_SetOutputFormatL )
     ADD_SUT( UT_SetTestDllNamesL )
     ADD_SUT( UT_FindArgumentL )
+    ADD_SUT( UT_SetTimeoutL )
+    ADD_SUT( UT_SetTestCaseNamesL )
+    //ADD_SUT( UT_TestCommandLineL )
     }
 
 // ---------------------------------------------------------------------------
@@ -116,7 +121,38 @@ void UT_CSymbianUnitTestCommandLineParser::UT_SetOutputFormatL()
     iParser->SetOutputFormatL();
     SUT_ASSERT_EQUALS( _L( "txt" ), iParser->OutputFormat() ) 
     }
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+//
+void UT_CSymbianUnitTestCommandLineParser::UT_SetTimeoutL()
+	{ 
+    // Default timeout. 
+    iParser->iArguments->Args().Reset();
+    iParser->SetTimeoutL();
+    SUT_ASSERT_EQUALS( iParser->Timeout(), 30 )
 
+    // Set timeout=50, long form. 
+    _LIT( KTimeoutLong, "-timeout=50" );
+    iParser->iArguments->Args().Reset();
+    iParser->iArguments->Args().AppendL( KTimeoutLong );
+    iParser->SetTimeoutL();
+    SUT_ASSERT_EQUALS( iParser->Timeout(), 50 )
+    
+    // Set timeout=50, short form. 
+    _LIT( KTimeoutShort, "-to=20" );
+    iParser->iArguments->Args().Reset();
+    iParser->iArguments->Args().AppendL( KTimeoutShort );
+    iParser->SetTimeoutL();
+    SUT_ASSERT_EQUALS( iParser->Timeout(), 20 )
+
+    // Set timeout to invalid value, long form. 
+    _LIT( KInvalidTimeoutLong, "-timeout=-50" );
+    iParser->iArguments->Args().Reset();
+    iParser->iArguments->Args().AppendL( KInvalidTimeoutLong );
+    iParser->SetTimeoutL();
+    SUT_ASSERT_EQUALS( iParser->Timeout(), 30 )
+	}
 // -----------------------------------------------------------------------------
 //
 // -----------------------------------------------------------------------------
@@ -161,6 +197,57 @@ void UT_CSymbianUnitTestCommandLineParser::UT_SetTestDllNamesL()
         _L( "test4.dll" ), iParser->TestDllNames().MdcaPoint( 1 ) )
     SUT_ASSERT( !iParser->ShowHelp() )    
     }
+
+// ---------------------------------------------------------------------------
+//
+// ---------------------------------------------------------------------------
+//
+void UT_CSymbianUnitTestCommandLineParser::UT_SetTestCaseNamesL()
+	{
+	// Testcase Names, no name. 
+	iParser->SetTestCaseNamesL();
+	SUT_ASSERT( !iParser->TestCaseNames().MdcaCount() )
+	
+	// One testcase name, long form. 
+    _LIT( KOneTestCaseNameLong, "-cases=case1" );
+    iParser->iArguments->Args().Reset();
+    iParser->iArguments->Args().AppendL( KOneTestCaseNameLong );
+    iParser->SetTestCaseNamesL();
+    SUT_ASSERT_EQUALS( 1, iParser->TestCaseNames().MdcaCount() )
+    SUT_ASSERT_EQUALS( 
+    	_L( "case1" ), iParser->TestCaseNames().MdcaPoint( 0 ) )
+    
+    // One testcase name, short form. 
+    _LIT( KOneTestCaseNameShort, "-c=case2" );
+    iParser->iArguments->Args().Reset();
+    iParser->iArguments->Args().AppendL( KOneTestCaseNameShort );
+    iParser->SetTestCaseNamesL();
+    SUT_ASSERT_EQUALS( 1, iParser->TestCaseNames().MdcaCount() )
+    SUT_ASSERT_EQUALS( 
+    	_L( "case2" ), iParser->TestCaseNames().MdcaPoint( 0 ) )
+    
+    // Two testcase names, long form. 
+    _LIT( KTwoTestCaseNameLong, "-cases=case3,case4" );
+    iParser->iArguments->Args().Reset();
+    iParser->iArguments->Args().AppendL( KTwoTestCaseNameLong );
+    iParser->SetTestCaseNamesL();
+    SUT_ASSERT_EQUALS( 2, iParser->TestCaseNames().MdcaCount() )
+    SUT_ASSERT_EQUALS( 
+    	_L( "case3" ), iParser->TestCaseNames().MdcaPoint( 0 ) )
+    SUT_ASSERT_EQUALS( 
+    	_L( "case4" ), iParser->TestCaseNames().MdcaPoint( 1 ) )
+    
+    // Two testcase names, short form. 
+    _LIT( KTwoTestCaseNameShort, "-c=case5,case6" );
+    iParser->iArguments->Args().Reset();
+    iParser->iArguments->Args().AppendL( KTwoTestCaseNameShort );
+    iParser->SetTestCaseNamesL();
+    SUT_ASSERT_EQUALS( 2, iParser->TestCaseNames().MdcaCount() )
+    SUT_ASSERT_EQUALS( 
+    	_L( "case5" ), iParser->TestCaseNames().MdcaPoint( 0 ) )
+    SUT_ASSERT_EQUALS( 
+    	_L( "case6" ), iParser->TestCaseNames().MdcaPoint( 1 ) )
+	}
 
 // -----------------------------------------------------------------------------
 //
@@ -212,3 +299,54 @@ void UT_CSymbianUnitTestCommandLineParser::UT_FindArgumentL()
     SUT_ASSERT( iParser->FindArgument( KNullDesC, KShortKey, value ) )
     SUT_ASSERT_EQUALS( _L( "value2" ), value )    
     }
+
+void UT_CSymbianUnitTestCommandLineParser::LaunchExample( TInt aType )
+{
+    _LIT( KSymbianUnitTestFilename, "symbianunittest.exe" );
+	_LIT( KSymbianUnitTestArgs, "-t=ut_racecar.dll -noprompt -output=" );
+
+    const TInt KMaxArgLength( 255 );
+	TBuf<KMaxArgLength> strArgs;
+    strArgs.Copy( KSymbianUnitTestArgs );
+    
+    switch( aType ) 
+        {
+        case 0: // html
+            strArgs.Append( _L("html") );
+            break;
+            
+        case 1: // xml
+            strArgs.Append( _L("xml") );
+            break;
+            
+        case 2: // txt
+            strArgs.Append( _L("txt") );
+            break;
+        
+        default:
+            //strArgs.Append( _L("html") );
+            strArgs = strArgs.Left( 27 );
+        }
+	
+	RProcess proc;
+	proc.Create( KSymbianUnitTestFilename, strArgs );
+	TRequestStatus status;
+	proc.Logon( status );
+	proc.Resume();
+	
+	User::WaitForRequest( status );
+	proc.Close();
+    if ( KErrNone != status.Int() )
+        {
+        User::LeaveIfError( status.Int() );
+        }
+}
+    
+void UT_CSymbianUnitTestCommandLineParser::UT_TestCommandLineL() 
+	{
+	// set output = html, xml, txt, default;
+    for(TInt i=0; i<30; ++i) 
+        {
+        LaunchExample(i);
+        }
+	}

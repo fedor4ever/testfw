@@ -98,7 +98,7 @@ class CSymbianUnitTest : public CBase, public MSymbianUnitTestInterface
         */        
         IMPORT_C void ConstructL( const TDesC8& aName );
     
-    protected: // New functions    
+    public: // New functions    
 
         /**
         * This function should be overidden in the actual unit test classes.
@@ -114,6 +114,7 @@ class CSymbianUnitTest : public CBase, public MSymbianUnitTestInterface
         */        
         IMPORT_C virtual void Teardown();
 
+    protected:    // New functions    
         /**
         * Checks whteher the test case is being run using memory 
         * allocation failure simulation.
@@ -259,6 +260,77 @@ class CSymbianUnitTest : public CBase, public MSymbianUnitTestInterface
             const TDesC8& aStatement,
             TInt aLineNumber,
             const TDesC8& aFileName ); 
+
+
+
+	 /**
+        * Asserts that two TInt values are equal.
+        * Leaves with a Symbian unit test framework specific error code
+        * if the values are not equal.
+        * In case of a failed assertion, the framework records 
+        * the failure reason, line number and file name to the test results.
+        * Use macro SYMBIAN_UT_ASSERT_EQUALS in symbianunittestmacros.h 
+        * instead to avoid the need to pass the other parameters 
+        * than the actual asserted values.  
+        * 
+        * @param aExpectedValue the expected value
+        * @param aActualValue the actual value
+        * @param aLineNumber the line number of the assertion
+        * @param aFileName the name of the file where the assertion is located
+        * @param aFailureMessage the error message
+        */        
+        IMPORT_C void AssertEqualsL( 
+            TInt aExpectedValue,
+            TInt aActualValue,
+            TInt aLineNumber,
+            const TDesC8& aFileName,
+	    const TDesC8& aFailureMessage );        
+
+        /**
+        * Asserts that two TDesC8 values are equal.
+        * Leaves with a Symbian unit test framework specific error code
+        * if the values are not equal.
+        * In case of a failed assertion, the framework records 
+        * the failure reason, line number and file name to the test results.
+        * Use macro SYMBIAN_UT_ASSERT_EQUALS in symbianunittestmacros.h 
+        * instead to avoid the need to pass the other parameters 
+        * than the actual asserted values.  
+        * 
+        * @param aExpectedValue the expected value
+        * @param aActualValue the actual value
+        * @param aLineNumber the line number of the assertion
+        * @param aFileName the name of the file where the assertion is located
+        * @param aFailureMessage the error message
+        */ 
+        IMPORT_C void AssertEqualsL(
+            const TDesC8& aExpectedValue,
+            const TDesC8& aActualValue, 
+            TInt aLineNumber, 
+            const TDesC8& aFileName,
+	    const TDesC8& aFailureMessage );
+
+        /**
+        * Asserts that two TDesC16 values are equal.
+        * Leaves with a Symbian unit test framework specific error code
+        * if the values are not equal.
+        * In case of a failed assertion, the framework records 
+        * the failure reason, line number and file name to the test results.
+        * Use macro SYMBIAN_UT_ASSERT_EQUALS in symbianunittestmacros.h 
+        * instead to avoid the need to pass the other parameters 
+        * than the actual asserted values.  
+        * 
+        * @param aExpectedValue the expected value
+        * @param aActualValue the actual value
+        * @param aLineNumber the line number of the assertion
+        * @param aFileName the name of the file where the assertion is located
+        * @param aFailureMessage the error message
+        */        
+        IMPORT_C void AssertEqualsL(
+            const TDesC16& aExpectedValue,
+            const TDesC16& aActualValue,
+            TInt aLineNumber,
+            const TDesC8& aFileName,
+	    const TDesC8& aFailureMessage );      
         
     private: // Internal class for a unit test function's data
         

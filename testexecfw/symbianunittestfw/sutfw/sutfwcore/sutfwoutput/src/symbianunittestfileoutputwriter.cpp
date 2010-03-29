@@ -17,6 +17,7 @@
 
 #include "symbianunittestfileoutputwriter.h"
 #include "symbianunittestuicallback.h"
+#include <utf.h>
 
 _LIT( KResultDirectory, "\\sut\\" );
 _LIT8( KDateAndTimeFormat, "%02d.%02d.%04d @ %02d:%02d:%02d" );
@@ -107,6 +108,18 @@ void CSymbianUnitTestFileOutputWriter::WriteDateAndTimeL()
 void CSymbianUnitTestFileOutputWriter::WriteL( const TDesC8& aValue )
     {
     User::LeaveIfError( iFile.Write( aValue ) );
+    }
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+//
+void CSymbianUnitTestFileOutputWriter::WriteL( const TDesC& aValue )
+    {
+    HBufC8* value = CnvUtfConverter::ConvertFromUnicodeToUtf8L(aValue);
+    CleanupStack::PushL(value);
+    User::LeaveIfError( iFile.Write( *value ) );
+    CleanupStack::PopAndDestroy( value );
     }
 
 // -----------------------------------------------------------------------------

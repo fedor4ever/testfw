@@ -27,6 +27,8 @@ _LIT( KTestCasesKey, "-cases=" );
 _LIT( KTestCasesKeyShort, "-c=" );
 _LIT( KAllocKey, "-alloc" );
 _LIT( KAllocKeyShort, "-a" );
+_LIT( KBackgroundKey, "-background" );
+_LIT( KBackgroundKeyShort, "-b" );
 _LIT( KOutputKey, "-output=" );
 _LIT( KOutputKeyShort, "-o=" );
 _LIT( KNoPromptKey, "-noprompt" );
@@ -67,6 +69,7 @@ CSymbianUnitTestCommandLineParser* CSymbianUnitTestCommandLineParser::NewL()
 // -----------------------------------------------------------------------------
 //
 CSymbianUnitTestCommandLineParser::CSymbianUnitTestCommandLineParser()
+	: iBackground( EFalse )
     {
     }
 
@@ -81,6 +84,7 @@ void CSymbianUnitTestCommandLineParser::ConstructL()
     iShowHelp =  FindArgument( KHelpKey, KHelpKeyShort, dummy );
     iAllocFailureSimulation = FindArgument( KAllocKey, KAllocKeyShort, dummy );
     iNoPrompt = FindArgument( KNoPromptKey, KNoPromptKey, dummy );
+    iBackground = FindArgument( KBackgroundKey, KBackgroundKeyShort, dummy );
     SetOutputFormatL();
     SetTimeoutL();
     SetTestDllNamesL();
@@ -139,6 +143,15 @@ TBool CSymbianUnitTestCommandLineParser::MemoryAllocationFailureSimulation() con
 //
 // -----------------------------------------------------------------------------
 //
+TBool CSymbianUnitTestCommandLineParser::Background() const
+    {
+    return iBackground;
+    }
+
+// -----------------------------------------------------------------------------
+//
+// -----------------------------------------------------------------------------
+//
 const TDesC& CSymbianUnitTestCommandLineParser::OutputFileName() const
     {
     return KOutputFileName;
@@ -180,7 +193,9 @@ void CSymbianUnitTestCommandLineParser::SetOutputFormatL()
     {
     HBufC* outputFormat = NULL;
     TPtrC outputFormatPtr;
-    if ( FindArgument( KOutputKey, KOutputKeyShort, outputFormatPtr ) )
+    TBool found = EFalse;
+    found = FindArgument( KOutputKey, KOutputKeyShort, outputFormatPtr );
+    if ( found )
         {
         outputFormat = outputFormatPtr.AllocL();
         }
@@ -204,12 +219,13 @@ void CSymbianUnitTestCommandLineParser::SetTimeoutL()
     if ( hasTimeout)
         {
         TLex timeoutLex(timeoutPtr);
-	TInt timeout;
+		TInt timeout;
         TInt ret = timeoutLex.Val(timeout);
-	if (ret == KErrNone && timeout >= 0) 
-	    {
-	    iTimeout = timeout;
-	    }
+        hasTimeout = ( ret == KErrNone && timeout >= 0 );
+		if ( hasTimeout ) 
+	    	{
+		    iTimeout = timeout;
+		    }
         }
     }
 
@@ -222,14 +238,19 @@ void CSymbianUnitTestCommandLineParser::SetTestDllNamesL()
     CDesCArray* testDllNames = new( ELeave )CDesCArrayFlat( 1 );
     CleanupStack::PushL( testDllNames );
     TPtrC testDllNamesPtr;
-    if ( FindArgument( KTestsKey, KTestsKeyShort, testDllNamesPtr ) )
+    TBool found = EFalse;
+    found = FindArgument( KTestsKey, KTestsKeyShort, testDllNamesPtr );
+    if ( found )
         {
         TSymbianUnitTestDllNameParser parser;
         parser.Parse( testDllNamesPtr );
         TPtrC testDllNamePtr;
-        while ( parser.GetNext( testDllNamePtr ) == KErrNone )
+        TBool hasNext = EFalse;
+        hasNext = ( parser.GetNext( testDllNamePtr ) == KErrNone );
+        while ( hasNext )
             {
             testDllNames->AppendL( testDllNamePtr );
+            hasNext = ( parser.GetNext( testDllNamePtr ) == KErrNone );
             }
         }
     iShowHelp = ( testDllNames->Count() == 0 );
@@ -247,15 +268,20 @@ void CSymbianUnitTestCommandLineParser::SetTestCaseNamesL()
     CDesCArray* testCaseNames = new( ELeave )CDesCArrayFlat( 1 );
     CleanupStack::PushL( testCaseNames );
     TPtrC testCaseNamesPtr;
-    if ( FindArgument( KTestCasesKey, KTestCasesKeyShort, testCaseNamesPtr ) )
+    TBool found = EFalse;
+    found = FindArgument( KTestCasesKey, KTestCasesKeyShort, testCaseNamesPtr );
+    if ( found )
         {
 	//reuse the testdll parser here for case names
         TSymbianUnitTestDllNameParser parser;
         parser.Parse( testCaseNamesPtr );
         TPtrC testCaseNamePtr;
-        while ( parser.GetNext( testCaseNamePtr ) == KErrNone )
+        TBool hasNext = EFalse;
+        hasNext = ( parser.GetNext( testCaseNamePtr ) == KErrNone );
+        while ( hasNext )
             {
             testCaseNames->AppendL( testCaseNamePtr );
+            hasNext = ( parser.GetNext( testCaseNamePtr ) == KErrNone );
             }
         }
     CleanupStack::Pop( testCaseNames );

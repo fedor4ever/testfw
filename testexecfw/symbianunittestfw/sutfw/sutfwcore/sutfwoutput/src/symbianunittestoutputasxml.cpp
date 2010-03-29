@@ -23,7 +23,8 @@
 
 _LIT8( KXmlResultOpenTag, "<SYMBIANUNITTEST_RESULT testcount=\"%d\">\r\n" );
 _LIT8( KXmlResultCloseTag, "</SYMBIANUNITTEST_RESULT>\r\n" );
-_LIT8( KXmlPassedTestsTag, "\t<SYMBIANUNITTEST_PASSED count=\"%d\"/>\r\n" );
+_LIT8( KXmlPassedTestsOpenTag, "\t<SYMBIANUNITTEST_PASSED count=\"%d\">\r\n" );
+_LIT8( KXmlPassedTestsCloseTag, "\t</SYMBIANUNITTEST_PASSED>\r\n" );
 _LIT8( KXmlFailedTestsOpenTag, "\t<SYMBIANUNITTEST_FAILED count=\"%d\">\r\n" );
 _LIT8( KXmlFailedTestsCloseTag, "\t</SYMBIANUNITTEST_FAILED>\r\n" );
 _LIT8( KXmlFailureOpenTag, "\t\t<SYMBIANUNITTEST_FAILURE>\r\n" );
@@ -95,7 +96,15 @@ void CSymbianUnitTestOutputAsXml::PrintHeaderL(
 void CSymbianUnitTestOutputAsXml::PrintPassedTestsL( 
     CSymbianUnitTestResult& aResult ) 
     {
-    iOutputWriter->WriteL( KXmlPassedTestsTag, aResult.PassedTestCount() );
+    iOutputWriter->WriteL( KXmlPassedTestsOpenTag, aResult.PassedTestCount() );
+    const CDesCArray& testCaseNames = aResult.TestCaseNames();
+    for ( TInt i=0; i < testCaseNames.Count(); i++ )
+        {
+        iOutputWriter->WriteL( KXmlTestNameOpenTag );
+        iOutputWriter->WriteL( testCaseNames[i]);
+        iOutputWriter->WriteL( KXmlTestNameCloseTag );
+        }
+    iOutputWriter->WriteL( KXmlPassedTestsCloseTag );
     }
 
 // -----------------------------------------------------------------------------

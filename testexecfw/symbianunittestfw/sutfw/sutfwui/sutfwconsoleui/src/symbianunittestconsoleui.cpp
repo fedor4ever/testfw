@@ -15,6 +15,8 @@
 *
 */
 
+#include <e32debug.h>
+
 #include "symbianunittestconsoleui.h"
 #include "symbianunittestcommandlineparser.h"
 #include "symbianunittestrunner.h"
@@ -28,9 +30,10 @@ _LIT( KTestRunnerFailedTxt, "  Test run failed!\n  Reason: %d\n" );
 _LIT( KNoTestsFoundTxt, "  No tests found!\n" );
 _LIT( KTestsExecutedTxt, "  Executed: %d / %d\n" );
 _LIT( KPassedTestsTxt, "  Passed: %d\n" );
-_LIT( KFailedTestsTxt, "  Failed: %d\n" );
-_LIT( KSymbianUnitTestPanic, "SymbianUnit creation" );
+//_LIT( KFailedTestsTxt, "  Failed: %d\n" );
+_LIT( KFailedTestsTxt2, "  Failed: %S\n" );
 _LIT( KWindowName, "SymbianUnit" );
+_LIT( KSymbianUnitTestPanic, "SymbianUnit creation" );
 _LIT( KPressAnyKeyTxt, "\n==[ press any key ]==\n    " );
 
 _LIT( KHelpTxt, 
@@ -38,6 +41,7 @@ _LIT( KHelpTxt,
 -tests|t=<dll,dll,...>\n\
 -cases|c=<case,case,...>\n\
 -alloc|a\n\
+-background|b\n\
 -help|h\n\
 -output|o=<html|xml|txt>\n\
 -timeout|to\n\
@@ -50,11 +54,13 @@ _LIT( KHelpTxt,
 //
 GLDEF_C TInt E32Main() 
     {
+    //__UHEAP_MARK;
     CTrapCleanup* cleanup = CTrapCleanup::New();
     TRAPD( err, MainL() );
     __ASSERT_ALWAYS( 
         err == KErrNone, User::Panic( KSymbianUnitTestPanic, err ) );
     delete cleanup;
+    //__UHEAP_MARKEND;
     User::Heap().Reset();
     return err;
     }
@@ -65,18 +71,15 @@ GLDEF_C TInt E32Main()
 //
 LOCAL_C void MainL() 
     {
-    RThread().SetPriority( EPriorityAbsoluteForeground );    
     // install an active scheduler
     CActiveScheduler* scheduler = new( ELeave )CActiveScheduler;
     CActiveScheduler::Install( scheduler );
     CleanupStack::PushL( scheduler );
-
-    TSize size( KConsFullScreen, KConsFullScreen );
-    CConsoleBase* console = Console::NewL( KWindowName, size );
     CleanupStack::Pop( scheduler );
 
     CSymbianUnitTestConsoleUi* main = NULL;
-    TRAPD( err, main = CSymbianUnitTestConsoleUi::NewL( *console ) );
+
+    TRAPD( err, main = CSymbianUnitTestConsoleUi::NewL() );
     if ( err == KErrNone ) 
         {
         CActiveScheduler::Start();
@@ -86,17 +89,17 @@ LOCAL_C void MainL()
     // Do not delete console. It will check for memory leaks.
     // This is not what is wanted if running tests without 
     // memory leak detection.
+    //delete console;
     }
 
 // -----------------------------------------------------------------------------
 //
 // -----------------------------------------------------------------------------
 //
-CSymbianUnitTestConsoleUi* CSymbianUnitTestConsoleUi::NewLC( 
-    CConsoleBase& aConsole )
+CSymbianUnitTestConsoleUi* CSymbianUnitTestConsoleUi::NewLC()
     {
     CSymbianUnitTestConsoleUi* self = 
-        new( ELeave )CSymbianUnitTestConsoleUi( aConsole );
+        new( ELeave )CSymbianUnitTestConsoleUi();
     CleanupStack::PushL( self );
     self->ConstructL();
     return self;
@@ -106,11 +109,10 @@ CSymbianUnitTestConsoleUi* CSymbianUnitTestConsoleUi::NewLC(
 //
 // -----------------------------------------------------------------------------
 //
-CSymbianUnitTestConsoleUi* CSymbianUnitTestConsoleUi::NewL( 
-    CConsoleBase& aConsole )
+CSymbianUnitTestConsoleUi* CSymbianUnitTestConsoleUi::NewL()
     {
     CSymbianUnitTestConsoleUi* self = 
-        CSymbianUnitTestConsoleUi::NewLC( aConsole );
+        CSymbianUnitTestConsoleUi::NewLC();
     CleanupStack::Pop( self );
     return self;
     }
@@ -119,9 +121,8 @@ CSymbianUnitTestConsoleUi* CSymbianUnitTestConsoleUi::NewL(
 //
 // -----------------------------------------------------------------------------
 //
-CSymbianUnitTestConsoleUi::CSymbianUnitTestConsoleUi( CConsoleBase& aConsole )
- : CActive( EPriorityStandard ),
-   iConsole( aConsole )
+CSymbianUnitTestConsoleUi::CSymbianUnitTestConsoleUi()
+ : CActive( EPriorityStandard )
     {
     }
 
@@ -134,6 +135,17 @@ void CSymbianUnitTestConsoleUi::ConstructL()
     User::SetJustInTime( EFalse ); // Do not stop on test case panics
     iCommandLineParser = CSymbianUnitTestCommandLineParser::NewL();
     iTestRunner = CSymbianUnitTestRunner::NewL( *this );
+    if( !iCommandLineParser->Background() ) 
+        {
+        TSize size( KConsFullScreen, KConsFullScreen );
+        iConsole = Console::NewL( KWindowName, size );
+        RThread().SetPriority( EPriorityAbsoluteForeground );    
+        }
+    else 
+        {
+        RThread().SetPriority( EPriorityAbsoluteBackground );    
+        }
+
     CActiveScheduler::Add( this );
     // Set ready to run immediately
     TRequestStatus *status = &iStatus;
@@ -150,6 +162,7 @@ CSymbianUnitTestConsoleUi::~CSymbianUnitTestConsoleUi()
     Cancel();
     delete iTestRunner;
     delete iCommandLineParser;
+    delete iConsole;
     }
 
 // -----------------------------------------------------------------------------
@@ -158,39 +171,58 @@ CSymbianUnitTestConsoleUi::~CSymbianUnitTestConsoleUi()
 //
 void CSymbianUnitTestConsoleUi::RunL()
     {
-    iConsole.Printf( KTitleTxt, SUT_MAJOR_VERSION, SUT_MINOR_VERSION, SUT_BUILD_VERSION);
-    if ( iCommandLineParser->ShowHelp() )
+    if (iCommandLineParser->Background()) 
         {
-        iConsole.Printf( KHelpTxt );
-        }
-    else
-        {
-        PrintAllocFailureSimulationText();
-        iConsole.Printf( KExecutingTestsTxt );
+        //run in background
         TRAPD( err, 
-            iTestRunner->ExecuteTestsL( 
-                iCommandLineParser->TestDllNames(),
-                iCommandLineParser->MemoryAllocationFailureSimulation(),
-                iCommandLineParser->OutputFileName(),
-                iCommandLineParser->OutputFormat(),
-	        iCommandLineParser->TestCaseNames(),
-		iCommandLineParser->Timeout()) )
-        if ( err != KErrNone )
+        iTestRunner->ExecuteTestsL( 
+            iCommandLineParser->TestDllNames(),
+            iCommandLineParser->MemoryAllocationFailureSimulation(),
+            iCommandLineParser->OutputFileName(),
+            iCommandLineParser->OutputFormat(),
+            iCommandLineParser->TestCaseNames(),
+            iCommandLineParser->Timeout()) )
+	if ( err != KErrNone)
+	    {
+		    RDebug::Print( KTestRunnerFailedTxt, err );
+	    }
+        }
+    else 
+        {
+        iConsole->Printf( KTitleTxt, SUT_MAJOR_VERSION, SUT_MINOR_VERSION, SUT_BUILD_VERSION);
+        if ( iCommandLineParser->ShowHelp() )
             {
-            iConsole.Printf( KTestRunnerFailedTxt, err );
+            InfoMsg( KHelpTxt );
             }
-        else 
-            {
-            if ( iExecutedTestCount == 0 )
+        else
+           {
+            PrintAllocFailureSimulationText();
+            InfoMsg( KExecutingTestsTxt );
+            TRAPD( err, 
+                iTestRunner->ExecuteTestsL( 
+                    iCommandLineParser->TestDllNames(),
+                    iCommandLineParser->MemoryAllocationFailureSimulation(),
+                    iCommandLineParser->OutputFileName(),
+                    iCommandLineParser->OutputFormat(),
+    	        iCommandLineParser->TestCaseNames(),
+    		iCommandLineParser->Timeout()) )
+            if ( err != KErrNone )
                 {
-                iConsole.Printf( KNoTestsFoundTxt );
+                    iConsole->Printf( KTestRunnerFailedTxt, err );
+                }
+            else 
+                {
+                if ( iExecutedTestCount == 0 )
+                    {
+                    InfoMsg( KNoTestsFoundTxt );
+                    }
                 }
             }
-        }
-    if ( iCommandLineParser->PromptUser() )
-        {
-        iConsole.Printf( KPressAnyKeyTxt );
-        iConsole.Getch(); // get and ignore character        
+        if ( iCommandLineParser->PromptUser() )
+            {
+            InfoMsg( KPressAnyKeyTxt );
+            iConsole->Getch(); // get and ignore character        
+            }
         }
     CActiveScheduler::Stop();
     }
@@ -209,7 +241,7 @@ void CSymbianUnitTestConsoleUi::DoCancel()
 //
 void CSymbianUnitTestConsoleUi::InfoMsg( const TDesC& aMessage )
     {
-    iConsole.Printf( aMessage );
+    iConsole->Printf( aMessage );
     }
 
 // -----------------------------------------------------------------------------
@@ -220,7 +252,7 @@ void CSymbianUnitTestConsoleUi::InfoMsg(
     const TDesC& aFormat, 
     const TDesC& aMessage )
     {
-    iConsole.Printf( aFormat, &aMessage );
+    iConsole->Printf( aFormat, &aMessage );
     }
 
 // -----------------------------------------------------------------------------
@@ -229,19 +261,29 @@ void CSymbianUnitTestConsoleUi::InfoMsg(
 //
 void CSymbianUnitTestConsoleUi::IncrementExecutedTestsCount()
     {
-    TPoint pos = iConsole.CursorPos();
+    if (iCommandLineParser->Background()) 
+        {
+        return;
+        }
+    TPoint pos = iConsole->CursorPos();
     pos.iY -= 1;
     if ( iExecutedTestCount > 0 )
         {
         pos.iY -= 2;
         }
-    iConsole.SetCursorPosAbs( pos );
+    iConsole->SetCursorPosAbs( pos );
+    
     iExecutedTestCount++;
-    iConsole.Printf( 
+    iConsole->Printf( 
         KTestsExecutedTxt, iExecutedTestCount, iTestRunner->TestCount());
+    
     TInt passedTestCount = iExecutedTestCount - iTestRunner->FailedTestCount();
-    iConsole.Printf( KPassedTestsTxt, passedTestCount );
-    iConsole.Printf( KFailedTestsTxt, iTestRunner->FailedTestCount() );
+        iConsole->Printf( KPassedTestsTxt, passedTestCount );
+    
+    TInt count = iTestRunner->FailedTestCount();
+    TBuf<10> txtCount;
+    txtCount.AppendFormat( _L("%d"), count );
+    InfoMsg( KFailedTestsTxt2, txtCount );
     }
 
 // -----------------------------------------------------------------------------
@@ -252,10 +294,10 @@ void CSymbianUnitTestConsoleUi::PrintAllocFailureSimulationText()
     {
     if ( iCommandLineParser->MemoryAllocationFailureSimulation() )
         {
-        iConsole.Printf( KAllocOnTxt );
+        InfoMsg( KAllocOnTxt );
         }
     else
         {
-        iConsole.Printf( KAllocOffTxt );
+        InfoMsg( KAllocOffTxt );
         }
     }

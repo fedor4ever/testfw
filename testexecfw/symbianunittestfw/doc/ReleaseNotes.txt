@@ -1,0 +1,37 @@
+
+SymbianUnitTest Release Notes 1.1
+
+OVERVIEW:
+SymbianUnitTest is a unit test framework, which is a port of xUnit to Symbian C++. Its basic architecture and usage is closely followed the xUnit model.
+SymbianUnitTest makes full use of Symbian C++ language features. It provides helper macros for users to easily define test cases.
+Unit test frameworks are key elements of TDD (or Test Driven Development). For this reason, SymbianUnitTest is not only considered 
+as test framework to validate the software, but also the enabler for TDD and continuous integration to improve software quality and speed time to market.
+
+
+TECHNICAL SUPPORT:
+   -You can get latest information from SymbianUnitTest wiki page: http://wikis.in.nokia.com/Personal/SymbianUnitTest
+   -For any question and suggestion, please send email to ITE-Support@Nokia.com
+
+
+MAJOR FEATURES:
+  - Console UI (symbianunittest.exe) to run test cases
+  - Helper macros for eaily define test cases and assertion
+  - Support to run user specified test case(s)
+  - Support OOM testing
+  - Automatic memory leak detection
+  - Multiple output format (plain text, html, or xml)
+  - Configurable test execution time out
+  - Script to convert existing EUnit test cases into SymbianUnitTest
+  - Carbide plug-in to create test case
+  - Support ATS4
+  - User Guide document
+
+FIXED BUGS AND WORKAROUNDS:
+
+
+KNOWN ISSUES:
+ * There is no S60 or QT UI for SymbianUnitTest yet. Pleas use the console UI instead. 
+ * SymbianUnitTest doesn't support S60 ui component unit testing
+
+    
+

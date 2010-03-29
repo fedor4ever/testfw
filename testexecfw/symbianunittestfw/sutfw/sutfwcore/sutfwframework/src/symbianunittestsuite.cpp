@@ -48,7 +48,7 @@ EXPORT_C CSymbianUnitTestSuite* CSymbianUnitTestSuite::NewL(
 //
 // -----------------------------------------------------------------------------
 //
-void CSymbianUnitTestSuite::ConstructL( const TDesC& aName )
+EXPORT_C void CSymbianUnitTestSuite::ConstructL( const TDesC& aName )
     {
     iName = aName.AllocL();
     }
@@ -57,7 +57,7 @@ void CSymbianUnitTestSuite::ConstructL( const TDesC& aName )
 //
 // -----------------------------------------------------------------------------
 //
-CSymbianUnitTestSuite::CSymbianUnitTestSuite() 
+EXPORT_C CSymbianUnitTestSuite::CSymbianUnitTestSuite() 
     {
     }
 

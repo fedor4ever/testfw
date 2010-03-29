@@ -22,6 +22,7 @@
 
 _LIT8( KTxtExecutedTests, "\r\n %d unit tests executed " );
 _LIT8( KTxtPassedTests, " Passed tests: %d\r\n\r\n" );
+_LIT8( KTxtPassedTest,  "   Test: " );
 _LIT8( KTxtFailedTests, " Failed tests: %d\r\n\r\n" );
 _LIT8( KTxtFailureTest, "   Test: " );
 _LIT8( KTxtFailureFile, "   File: " );
@@ -90,6 +91,13 @@ void CSymbianUnitTestOutputAsText::PrintPassedTestsL(
     CSymbianUnitTestResult& aResult )
     {
     iOutputWriter->WriteL( KTxtPassedTests, aResult.PassedTestCount() );
+    const CDesCArray& testCaseNames = aResult.TestCaseNames();
+    for ( TInt i=0; i < testCaseNames.Count(); i++ )
+        {
+        iOutputWriter->WriteL( KTxtPassedTest);
+        iOutputWriter->WriteL( testCaseNames[i]);
+        iOutputWriter->WriteL( KLineEnd );
+        }
     }
 
 // -----------------------------------------------------------------------------

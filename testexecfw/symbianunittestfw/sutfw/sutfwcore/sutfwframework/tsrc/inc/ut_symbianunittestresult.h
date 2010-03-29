@@ -25,7 +25,7 @@
 class CSymbianUnitTestResult;
 
 // CLASS DECLARATION
-class UT_CSymbianUnitTestResult : public CSymbianUnitTest
+NONSHARABLE_CLASS( UT_CSymbianUnitTestResult ) : public CSymbianUnitTest
     {
     public: // Constructors and destructor
     

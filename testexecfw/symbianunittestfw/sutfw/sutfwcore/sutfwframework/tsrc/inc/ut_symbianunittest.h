@@ -27,7 +27,7 @@
 class CSymbianUnitTestResult;
 
 // CLASS DECLARATION
-class UT_CSymbianUnitTest : 
+NONSHARABLE_CLASS(UT_CSymbianUnitTest) : 
     public CSymbianUnitTest, 
     public MSymbianUnitTestObserver
     {
@@ -51,10 +51,11 @@ class UT_CSymbianUnitTest :
         void UT_ErrorInSetupL();
         void UT_LeaveInTestL();
         void UT_MemoryLeakInTestL();
+        void UT_EqualsAssertsL();
         void UT_FailingAssertsL();
         void UT_PassingAssertsL();
-	void UT_TestCaseNamesL();
-	void UT_TimeoutL();
+        void UT_TestCaseNamesL();
+        void UT_TimeoutL();
 
     protected: // Failing functions to simulate failing tests
         
@@ -68,6 +69,12 @@ class UT_CSymbianUnitTest :
         void SimulateFailingAssertLeaveL();
         void SimulateFailingAssertLeaveWithSpecificValueL();
         void SimulateTimeoutL();
+        void SimulateEqualsAssertWithStringL();
+		void SimulateEqualsAssertWithStringFailL();
+		void SimulateEqualsAssertWithString8L();
+		void SimulateEqualsAssertWithString8FailL();
+		void SimulateEqualsAssertWithIntL();
+		void SimulateEqualsAssertWithIntFailL();
         
     protected: // Dummy function to simulate setup and teardown
         

@@ -25,7 +25,7 @@
 class CSymbianUnitTestCommandLineParser;
 
 // CLASS DECLARATION
-class UT_CSymbianUnitTestCommandLineParser : public CSymbianUnitTest
+class UT_CSymbianUnitTestCommandLineParser  : public CSymbianUnitTest
     {
     public: // Constructors and destructor
     
@@ -40,6 +40,12 @@ class UT_CSymbianUnitTestCommandLineParser : public CSymbianUnitTest
         void UT_SetOutputFormatL();
         void UT_SetTestDllNamesL();
         void UT_FindArgumentL();
+        void UT_SetTimeoutL();
+        void UT_SetTestCaseNamesL();
+        
+        // new added. 
+        void UT_TestCommandLineL();
+        void LaunchExample( TInt aType );
     
     private: // Contructors
         

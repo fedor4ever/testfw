@@ -18,7 +18,7 @@
 TARGET        ut_sutfwframework.dll
 TARGETTYPE    dll
 UID           0x20022E76 0x20022E76
-
+NOEXPORTLIBRARY
 MACRO         SYMBIAN_UNIT_TEST
 
 // Sources tested
@@ -35,12 +35,13 @@ SOURCE        ut_symbianunittest.cpp
 SOURCE        ut_symbianunittestsuite.cpp
 SOURCE        ut_symbianunittestfailure.cpp
 SOURCE        ut_symbianunittestresult.cpp
+SOURCE        ut_symbianunittestother.cpp
 
 USERINCLUDE   ../inc
 USERINCLUDE   ../../inc
 USERINCLUDE   ../../../../inc
 
-SYSTEMINCLUDE /epoc32/include
+APP_LAYER_SYSTEMINCLUDE_SYMBIAN
 SYSTEMINCLUDE /epoc32/include/symbianunittest
 
 LIBRARY       euser.lib
@@ -53,4 +54,3 @@ LIBRARY       flogger.lib
 VENDORID 0x101FB657
 
 CAPABILITY    ALL -TCB
-

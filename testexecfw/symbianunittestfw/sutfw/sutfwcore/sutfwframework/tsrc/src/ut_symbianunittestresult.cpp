@@ -60,6 +60,9 @@ UT_CSymbianUnitTestResult::UT_CSymbianUnitTestResult()
 void UT_CSymbianUnitTestResult::ConstructL()
     {
     BASE_CONSTRUCT
+    
+    DEFINE_TEST_CLASS( UT_CSymbianUnitTestResult )
+    
     ADD_SUT( UT_TestCountL )
     ADD_SUT( UT_StartTestL )
     ADD_SUT( UT_AddFailureL )

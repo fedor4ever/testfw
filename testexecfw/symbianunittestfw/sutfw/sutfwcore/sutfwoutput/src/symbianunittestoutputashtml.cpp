@@ -19,6 +19,7 @@
 #include "symbianunittestfailure.h"
 #include "symbianunittestfileoutputwriter.h"
 #include "symbianunittestoutputashtml.h"
+#include <utf.h>
 
 // CONSTANTS
 _LIT8( KHtmlHeader, "<html><head><title>Unit test results</title></head>\n" );
@@ -108,6 +109,15 @@ void CSymbianUnitTestOutputAsHtml::PrintPassedTestsL(
     CSymbianUnitTestResult& aResult ) 
     {
     iOutputWriter->WriteL( KHtmlPassedTests, aResult.PassedTestCount() );
+    iOutputWriter->WriteL( KHtmlTableStartTag );
+    const CDesCArray& testCaseNames = aResult.TestCaseNames();
+    for ( TInt i=0; i < testCaseNames.Count(); i++ )
+        {
+        HBufC8* testName = CnvUtfConverter::ConvertFromUnicodeToUtf8L( testCaseNames[i] );
+        PrintTableRowL( KHtmlTestNameTitle, *testName );
+        delete testName;
+        }
+    iOutputWriter->WriteL( KHtmlTableEndTag );
     }
 
 // -----------------------------------------------------------------------------
