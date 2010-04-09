@@ -1,0 +1,71 @@
+//
+// Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description: 
+//
+// Sample TestFileServer_TEF.script
+// Your copyright notice
+
+LOAD_SUITE TestFileServer_TEF 
+
+START_TESTCASE TEST-CASE1
+	START_TEST_BLOCK 100 TestFileServer_TEF c:\data\TestFileServer_TEF.ini
+		CREATE_OBJECT CTestFileServerWrapper fileserver
+		COMMAND !Error=-11 fileserver CreateFile MyParamsSection
+	END_TEST_BLOCK
+END_TESTCASE TEST-CASE1
+
+START_TESTCASE TEST-CASE2
+	START_TEST_BLOCK 100 TestFileServer_TEF c:\data\TestFileServer_TEF.ini
+		CREATE_OBJECT CTestFileServerWrapper fileserver
+		//START_REPEAT c:\data\TestFileServer_TEF.ini RepeatSection repeatParam
+		//PRINT Loop test
+		COMMAND fileserver ReadFile MyParamsSection	
+		//END_REPEAT
+	END_TEST_BLOCK
+END_TESTCASE TEST-CASE2
+
+START_TESTCASE TEST-CASE3
+	START_TEST_BLOCK 100 TestFileServer_TEF c:\data\TestFileServer_TEF.ini
+		CREATE_OBJECT CTestFileServerWrapper fileserver
+		DELAY 2000
+		COMMAND fileserver ReadFile MyParamsSection
+	END_TEST_BLOCK
+END_TESTCASE TEST-CASE3
+
+
+START_TESTCASE TEST-CASE4
+	START_TEST_BLOCK 100 TestFileServer_TEF c:\data\TestFileServer_TEF.ini
+		CREATE_OBJECT CTestFileServerWrapper fileserver
+		COMMAND fileserver PanicExample PanicSection
+	END_TEST_BLOCK  !PanicString=USER !PanicCode=5
+END_TESTCASE TEST-CASE4
+
+
+
+CONCURRENT
+
+START_TESTCASE TEST-SAMPLE-CONCURRENT
+	START_TEST_BLOCK 100 TestFileServer_TEF c:\data\TestFileServer_TEF.ini
+		CREATE_OBJECT CTestFileServerWrapper fileserver
+		COMMAND fileserver ReadFile MyParamsSection
+	END_TEST_BLOCK
+	START_TEST_BLOCK 100 TestFileServer_TEF c:\data\TestFileServer_TEF.ini
+		CREATE_OBJECT CTestFileServerWrapper fileserver
+		COMMAND !Error=-14 fileserver ReadFile MyParamsSection
+	END_TEST_BLOCK
+	START_TEST_BLOCK 100 TestFileServer_TEF c:\data\TestFileServer_TEF.ini
+		CREATE_OBJECT CTestFileServerWrapper fileserver
+		COMMAND !Error=-14 fileserver ReadFile MyParamsSection
+	END_TEST_BLOCK		
+END_TESTCASE TEST-SAMPLE-CONCURRENT

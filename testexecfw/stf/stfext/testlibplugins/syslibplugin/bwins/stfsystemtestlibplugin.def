@@ -1,0 +1,6 @@
+EXPORTS
+	?LibEntryL@@YAPAVCstfsystemtestlibplugin@@XZ @ 1 NONAME ; class Cstfsystemtestlibplugin * LibEntryL(void)
+	?ExecuteCommandL@Cstfsystemtestlibplugin@@UAEHABVTDesC16@@@Z @ 2 NONAME ; int Cstfsystemtestlibplugin::ExecuteCommandL(class TDesC16 const &)
+	?IsCommandSupported@Cstfsystemtestlibplugin@@UAEHABVTDesC16@@@Z @ 3 NONAME ; int Cstfsystemtestlibplugin::IsCommandSupported(class TDesC16 const &)
+	
+

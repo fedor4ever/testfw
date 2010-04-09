@@ -1,0 +1,7 @@
+EXPORTS
+	_Z9LibEntryLv @ 1 NONAME
+	_ZN21CStfFileTestLibPlugin15ExecuteCommandLERK7TDesC16 @ 2 NONAME
+	_ZN21CStfFileTestLibPlugin18IsCommandSupportedERK7TDesC16 @ 3 NONAME
+	_ZTI21CStfFileTestLibPlugin @ 4 NONAME ; #<TI>#
+	_ZTV21CStfFileTestLibPlugin @ 5 NONAME ; #<VT>#
+

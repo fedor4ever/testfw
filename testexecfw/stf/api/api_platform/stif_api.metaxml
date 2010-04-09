@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<api id="d6c032dbc08ddbb1c1db14ad08df1147" dataversion="2.0">
+  <name>STIF API</name>
+  <description>Defines the API, which is used by STIF and its test modules.</description>
+  <type>c++</type>
+  <collection>stif</collection>
+  <libs>
+    <lib name="atslogger.lib" />
+    <lib name="Demomodule.lib" />
+    <lib name="StifKernelTestClassBase.lib" />
+    <lib name="StifTFwIf.lib" />
+    <lib name="SUEvent.lib" />
+    <lib name="testcombiner.lib" />
+    <lib name="StifTestEngine.lib" />
+    <lib name="StifTestInterface.lib" />
+    <lib name="testscripter.lib" />
+    <lib name="StifTestServer.lib" />
+  </libs>
+  <release category="platform" sinceversion="3.2"/>
+  <attributes>
+     <!-- This indicates wether the api provedes separate html documentation -->
+     <!-- or is the additional documentation generated from headers. -->
+     <!-- If you are unsuere then the value is "no" -->
+     <htmldocprovided>no</htmldocprovided>
+     <adaptation>no</adaptation>
+  </attributes>
+</api>

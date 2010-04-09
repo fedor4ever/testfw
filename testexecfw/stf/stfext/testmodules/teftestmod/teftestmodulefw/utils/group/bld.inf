@@ -1,0 +1,50 @@
+//
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description: 
+//
+
+PRJ_EXPORTS
+..\inc\testexecutestepbase.h			\epoc32\include\test\testexecutestepbase.h
+..\inc\testexecuteserverbase.h			\epoc32\include\test\testexecuteserverbase.h
+..\inc\testexecuteclient.h			\epoc32\include\test\testexecuteclient.h
+..\inc\testexecuteserverutils.h			\epoc32\include\test\testexecuteserverutils.h
+..\inc\testexecuteserverutils.inl		\epoc32\include\test\testexecuteserverutils.inl
+..\inc\tefshareddata.h				\epoc32\include\test\tefshareddata.h
+..\inc\tefshareddata.inl			\epoc32\include\test\tefshareddata.inl
+..\inc\testshareddata.h				\epoc32\include\test\testshareddata.h
+..\inc\testshareddata.inl			\epoc32\include\test\testshareddata.inl
+..\inc\tefexportconst.h				\epoc32\include\test\tefexportconst.h
+..\inc\testexecutelogbase.h			\epoc32\include\test\testexecutelogbase.h
+..\inc\testexecutelogger.h			\epoc32\include\test\testexecutelogger.h
+..\inc\tefscriptutils.h				\epoc32\include\test\tefscriptutils.h
+..\inc\blockitems.h				\epoc32\include\test\blockitems.h
+..\inc\datawrapper.h				\epoc32\include\test\datawrapper.h
+..\inc\testserver2.h				\epoc32\include\test\testserver2.h
+..\inc\testblockcontroller.h			\epoc32\include\test\testblockcontroller.h
+..\inc\testblockcontroller.inl			\epoc32\include\test\testblockcontroller.inl
+..\inc\activecallback.h				\epoc32\include\test\activecallback.h
+..\inc\datadictionary.h				\epoc32\include\test\datadictionary.h
+..\inc\tefresult.h				\epoc32\include\test\tefresult.h
+..\inc\commandprocessor.h			\epoc32\include\test\commandprocessor.h
+..\inc\teftimer.h				\epoc32\include\test\teftimer.h
+..\inc\dataaccess.h				\epoc32\include\test\dataaccess.h
+..\inc\datawrapper.inl				\epoc32\include\test\datawrapper.inl
+..\inc\tefutils.h				\epoc32\include\test\tefutils.h
+..\inc\teftestreport.h				\epoc32\include\test\teftestreport.h
+
+PRJ_MMPFILES
+testexecuteutils.mmp
+
+PRJ_TESTMMPFILES
+//..\test\group\testexecuteloggingtest.mmp

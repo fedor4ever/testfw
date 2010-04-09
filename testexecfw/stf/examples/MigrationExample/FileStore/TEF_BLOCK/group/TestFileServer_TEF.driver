@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ASCII"?>
+<driver:driver xmlns:driver="http://www.symbian.com/TestDriver">
+  <task name="TestFileServer_TEF" timeout="100000">
+    <task name="testProject" timeout="100000">
+      <executeOnPC>
+        <build testBuild="true" URI="${sourceroot}\TestFileServer_TEF\group"/>
+      </executeOnPC>
+      <transferToSymbian>
+        <transfer move="false" PCPath="${sourceroot}\TestFileServer_TEF\data\TestFileServer_TEF.ini" SymbianPath="c:\data\TestFileServer_TEF.ini"/>
+      </transferToSymbian>
+      <executeOnSymbian>
+        <testExecuteScript PCPath="${sourceroot}\TestFileServer_TEF\scripts\TestFileServer_TEF.script" SymbianPath="c:\scripts\TestFileServer_TEF.script"/>
+      </executeOnSymbian>
+    </task>
+  </task>
+</driver:driver>

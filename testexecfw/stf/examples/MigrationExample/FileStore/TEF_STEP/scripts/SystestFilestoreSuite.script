@@ -1,0 +1,55 @@
+//
+// Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description: 
+//
+// Sample Test Script
+
+PRINT Run all test Suite Tests
+
+LOAD_SERVER TEFSTEPFileStore
+
+START_TESTCASE  TestCase-1
+RUN_TEST_STEP !Error=-11 5 TEFSTEPFileStore CreateFile  c:\data\SystestFilestoreSuite.ini	Case1Section
+END_TESTCASE TestCase-1
+
+
+START_TESTCASE TestCase-2
+START_REPEAT c:\data\SystestFilestoreSuite.ini Case2Section repeatParam
+PRINT repeat testing.
+RUN_TEST_STEP 1000  TEFSTEPFileStore ReadFile c:\data\SystestFilestoreSuite.ini Case2Section
+END_REPEAT
+END_TESTCASE TestCase-2
+
+START_TESTCASE TestCase-3
+PRINT test Expected Panic.
+RUN_TEST_STEP !PanicString=USER !PanicCode=5 1000  TEFSTEPFileStore PanicExample c:\data\SystestFilestoreSuite.ini Case3Section
+END_TESTCASE TestCase-3
+
+START_TESTCASE TestCase-4
+PRINT test Delay.
+DELAY 2000
+RUN_TEST_STEP 1000 TEFSTEPFileStore ReadFile c:\data\SystestFilestoreSuite.ini Case4Section
+END_TESTCASE TestCase-4
+
+
+
+
+CONCURRENT
+START_TESTCASE  TestCase-5
+RUN_TEST_STEP 1000  TEFSTEPFileStore ReadFile  c:\data\SystestFilestoreSuite.ini	Case5Section
+RUN_TEST_STEP !Error=-14 1000  TEFSTEPFileStore ReadFile  c:\data\SystestFilestoreSuite.ini	Case5Section
+RUN_TEST_STEP !Error=-14 1000  TEFSTEPFileStore ReadFile  c:\data\SystestFilestoreSuite.ini	Case5Section
+END_TESTCASE TestCase-5
+
+PRINT Complete testSuite

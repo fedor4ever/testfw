@@ -1,0 +1,6 @@
+EXPORTS
+	?LibEntryL@@YAPAVCStfFileTestLibPlugin@@XZ @ 1 NONAME ; class CStfFileTestLibPlugin * LibEntryL(void)
+	?ExecuteCommandL@CStfFileTestLibPlugin@@UAEHABVTDesC16@@@Z @ 2 NONAME ; int CStfFileTestLibPlugin::ExecuteCommandL(class TDesC16 const &)
+	?IsCommandSupported@CStfFileTestLibPlugin@@UAEHABVTDesC16@@@Z @ 3 NONAME ; int CStfFileTestLibPlugin::IsCommandSupported(class TDesC16 const &)
+		
+

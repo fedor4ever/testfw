@@ -1,0 +1,9 @@
+EXPORTS
+	_Z9LibEntryLv @ 1 NONAME
+	_ZN23Cstfsystemtestlibplugin15ExecuteCommandLERK7TDesC16 @ 2 NONAME
+	_ZN23Cstfsystemtestlibplugin18IsCommandSupportedERK7TDesC16 @ 3 NONAME
+	_ZTI23Cstfsystemtestlibplugin @ 4 NONAME ; #<TI>#
+	_ZTV23Cstfsystemtestlibplugin @ 5 NONAME ; #<VT>#
+	_ZTI26CTestSecurityInstUIHandler @ 6 NONAME ; #<TI>#
+	_ZTV26CTestSecurityInstUIHandler @ 7 NONAME ; #<VT>#
+

@@ -1,0 +1,40 @@
+//
+// Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+// All rights reserved.
+// This component and the accompanying materials are made available
+// under the terms of "Eclipse Public License v1.0"
+// which accompanies this distribution, and is available
+// at the URL "http://www.eclipse.org/legal/epl-v10.html".
+//
+// Initial Contributors:
+// Nokia Corporation - initial contribution.
+//
+// Contributors:
+//
+// Description: 
+//
+
+
+#ifndef __TEFTESTMODULEFW_IBY__
+#define __TEFTESTMODULEFW_IBY__
+
+#ifndef TEF_LITE
+#define TEF_LITE
+#endif
+
+#include <testexecutelogger.iby>
+#include <iniparser.iby>
+#include <rfilelogger.iby>
+#include <testexecutepipsloggerclient.iby>
+#include <wrapperutilsplugin.iby>
+
+
+file=ABI_DIR\BUILD_DIR\TEFTestModule.dll	SHARED_LIB_DIR\TEFTestModule.dll
+file=ABI_DIR\BUILD_DIR\TEFTestModuleLite.dll	SHARED_LIB_DIR\TEFTestModuleLite.dll
+
+// Below files are duplicated with testexecute.iby(TEF v1). They are commented out temporarily
+// If TEF v1 is removed from MCL, the two files should be added in rom.
+
+//file=ABI_DIR\BUILD_DIR\testexecuteutils.dll	SHARED_LIB_DIR\testexecuteutils.dll 
+//data=\epoc32\data\z\system\data\testexecute.ini			system\data\testexecute.ini
+#endif

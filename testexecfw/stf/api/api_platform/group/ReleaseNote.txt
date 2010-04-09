@@ -1,0 +1,12 @@
+========================================================================
+RELEASE NOTE FOR STIF API PLATFORM - STIF_200946 (7.3.20)
+SUPPORTING SERIES 60 3.0 ->
+========================================================================
+
+Product Description:
+====================
+STIF API PLATFORM is a part of STIF project.
+
+
+Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+All rights reserved.

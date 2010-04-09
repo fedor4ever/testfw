@@ -1,0 +1,34 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*	bld.inf Toplevel build information for STF test modules.
+*/
+//scripter test module
+#include "../scriptermod/group/bld.inf"
+#if defined(__S60_)
+	// StifKernelTestClassBase
+        #include "../kerneltestmod/group/bld.inf"
+#endif // __S60_
+
+//TEF test module
+//#include "../teftestmod/group/bld.inf"
+
+//Test Combiner test module
+#include "../testcombiner/group/bld.inf"
+
+//TEF Test Module
+#include "../teftestmod/group/bld.inf"
+
+

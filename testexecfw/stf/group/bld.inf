@@ -1,0 +1,63 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*	bld.inf Toplevel build information for STF.
+*/
+
+#include <platform_paths.hrh>
+
+
+PRJ_PLATFORMS
+
+	DEFAULT
+
+
+PRJ_EXPORTS
+
+	TestFramework.ini +/wins/c/TestFramework/TestFramework.ini
+	TestFramework.ini +/winscw/c/TestFramework/TestFramework.ini
+	TestFramework.ini +/data/z/system/data/TestFramework.ini
+	
+	// This is added in order to export iby files automaticly in 5.0 env
+	../rom/Stif.iby     CORE_IBY_EXPORT_PATH(tools,Stif.iby) 
+	
+	../rom/stif_rom.iby CORE_IBY_EXPORT_PATH(tools/rom,stif_rom.iby)
+	
+	:zip ../TestModuleTemplates/TestModuleTemplates.zip +/tools/s60rndtools/stf
+	:zip ../examples/MigrationExample.zip +/tools/s60rndtools/stf
+	
+PRJ_TESTEXPORTS
+	
+PRJ_MMPFILES	
+
+// STF API
+#include "../api/api_platform/group/bld.inf"
+
+// STF framework
+#include "../stffw/group/bld.inf"
+
+// STF extensions
+#include "../stfext/group/bld.inf"
+
+// STF UI
+#include "../stfui/group/bld.inf"
+
+// Examples
+#include "../examples/demomodule/group/bld.inf"
+
+
+// End of File
+
+PRJ_MMPFILES

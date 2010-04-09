@@ -1,0 +1,28 @@
+EXPORTS
+	_ZN12REventSystem10WaitEventLERK7TDesC16i @ 1 NONAME
+	_ZN12REventSystem11UnsetEventLERK7TDesC16 @ 2 NONAME
+	_ZN12REventSystem11UnsetEventLERK7TDesC16P14TRequestStatus @ 3 NONAME
+	_ZN12REventSystem13ReleaseEventLERK7TDesC16i @ 4 NONAME
+	_ZN12REventSystem13RequestEventLERK7TDesC16i @ 5 NONAME
+	_ZN12REventSystem19SetIndicationEventLERK7TDesC16 @ 6 NONAME
+	_ZN12REventSystem19SetIndicationEventLERK7TDesC16P14TRequestStatus @ 7 NONAME
+	_ZN12REventSystem22RemoveInRequestedStateEi @ 8 NONAME
+	_ZN12REventSystem5CloseEv @ 9 NONAME
+	_ZN12REventSystem7ConnectEv @ 10 NONAME
+	_ZN12REventSystem9SetEventLERK7TDesC16 @ 11 NONAME
+	_ZN12REventSystem9SetEventLERK7TDesC16P14TRequestStatus @ 12 NONAME
+	_ZN15CAsyncEventList14AddAsyncEventLEP17CAsyncEventActive @ 13 NONAME
+	_ZN15CAsyncEventList17RemoveAsyncEventLEP17CAsyncEventActive @ 14 NONAME
+	_ZN15CAsyncEventList4NewLEv @ 15 NONAME
+	_ZN15CAsyncEventListD0Ev @ 16 NONAME
+	_ZN15CAsyncEventListD1Ev @ 17 NONAME
+	_ZN15CAsyncEventListD2Ev @ 18 NONAME
+	_ZN17CAsyncEventActive4NewLEi @ 19 NONAME
+	_ZN17CAsyncEventActive6StartLEP14TRequestStatus9TThreadIdRK7TDesC16P15CAsyncEventList @ 20 NONAME
+	_ZN17CAsyncEventActive9IsPendingEv @ 21 NONAME
+	_ZNK12REventSystem7VersionEv @ 22 NONAME
+	_ZTI15CAsyncEventList @ 23 NONAME ; #<TI>#
+	_ZTI17CAsyncEventActive @ 24 NONAME ; #<TI>#
+	_ZTV15CAsyncEventList @ 25 NONAME ; #<VT>#
+	_ZTV17CAsyncEventActive @ 26 NONAME ; #<VT>#
+

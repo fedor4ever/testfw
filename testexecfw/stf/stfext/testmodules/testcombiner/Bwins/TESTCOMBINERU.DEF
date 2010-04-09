@@ -1,0 +1,4 @@
+EXPORTS
+	?LibEntryL@@YAPAVCTestCombiner@@XZ @ 1 NONAME ; class CTestCombiner * __cdecl LibEntryL(void)
+	??1TScriptObject@@UAE@XZ @ 2 NONAME ABSENT ; TScriptObject::~TScriptObject(void)
+

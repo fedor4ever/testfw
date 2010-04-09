@@ -1,0 +1,37 @@
+/*
+* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+* 
+* Description:
+*
+*	bld.inf Toplevel build information for STF UIs.
+*/
+
+//UI Engine
+#include "../uiengine/group/bld.inf"
+
+// Qt UI 
+//#include "../qtui/group/bld.inf"
+
+// ATS UI
+// #include "../atsui/group/bld.inf"
+
+//STF Console UI
+#include "../stf/group/bld.inf"
+
+//former STIF console UI
+#include "../consoleui/group/bld.inf"
+
+//former STIF touchable console UI
+#include "../touchconsoleui/group/bld.inf"
+
+

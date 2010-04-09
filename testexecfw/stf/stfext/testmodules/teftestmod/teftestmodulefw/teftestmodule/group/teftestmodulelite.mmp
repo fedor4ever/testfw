@@ -1,0 +1,92 @@
+/*
+* Copyright (c) 2005-2009 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+* This component and the accompanying materials are made available
+* under the terms of "Eclipse Public License v1.0"
+* which accompanies this distribution, and is available
+* at the URL "http://www.eclipse.org/legal/epl-v10.html".
+*
+* Initial Contributors:
+* Nokia Corporation - initial contribution.
+*
+* Contributors:
+*
+* Description:  MMP file for STIF Test Framework's Normal test module.
+*
+*/
+
+#include "../../Group/testexecutelite.cfg"
+#include <platform_paths.hrh>
+
+SMPSAFE
+TARGET          TEFTestModuleLite.dll
+TARGETTYPE      dll
+#ifndef _USE_EWSD_
+EPOCALLOWDLLDATA
+#endif
+UID             0x1000008D 0x101FB3E7
+
+CAPABILITY      ALL -TCB
+/* Remove comments and replace 0x00000000 with correct vendor id */
+// VENDORID     0x00000000
+/* Remove comments and replace 0x00000000 with correct secure id */
+// SECUREID     0x00000000
+
+
+DEFFILE         TEFTestModule.def
+//TARGETPATH      ?target_path
+
+USERINCLUDE   ../inc
+USERINCLUDE   ../../utils/inc
+
+APP_LAYER_SYSTEMINCLUDE
+
+SOURCEPATH      ../src
+
+SOURCE          teftestmodule.cpp
+SOURCE	        scriptengine.cpp
+SOURCE	        testwatcher.cpp
+
+LIBRARY         euser.lib
+LIBRARY         StifTestInterface.lib
+LIBRARY         StifTestEngine.lib
+LIBRARY			testexecuteutils.lib
+LIBRARY			efsrv.lib
+LIBRARY			testexecutelogclient.lib
+LIBRARY			testexecutepipslogclient.lib
+LIBRARY			iniparser.lib
+
+#if !defined(TEF_LITE_VERSION)
+LIBRARY			apparc.lib
+LIBRARY			apgrfx.lib
+LIBRARY        	domaincli.lib
+LIBRARY			ws32.lib
+#endif
+
+LANG            SC
+
+/*
+START WINS      
+?wins_specific_information
+END
+
+START MARM
+?marm_specific_information
+END
+*/
+// Other possible keywords:
+ 
+// DOCUMENT     ?file, that is not compiled, but added to MSVC project workspace (i.e. release notes)
+/*
+START BITMAP ?target
+TARGETPATH   ?emulated_path_on_target_machine
+HEADER
+SOURCEPATH   ?source_path
+SOURCE       ?color_depth ?source_bitmap
+END
+*/
+// AIF ?filename
+
+
+
+// End of File

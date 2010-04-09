@@ -1,0 +1,77 @@
+;
+; Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+; All rights reserved.
+; This component and the accompanying materials are made available
+; under the terms of "Eclipse Public License v1.0"
+; which accompanies this distribution, and is available
+; at the URL "http://www.eclipse.org/legal/epl-v10.html".
+;
+; Initial Contributors:
+; Nokia Corporation - initial contribution.
+;
+; Contributors:
+; 
+; Description: Installation file for STIF UI
+;
+
+; Languages
+&EN
+
+; Package header, uid is the Stf's uid
+#{"STF"},(0x2002BC9F),1,0,0
+
+; Series60 product id for S60 3.0
+[0x101F7961], 0, 0, 0, {"Series60ProductID"}
+
+; Localised Vendor name
+%{"Nokia"}
+
+; Unique Vendor name
+:"Nokia"
+
+; Logo
+; None
+
+; Package signature - Optional
+; None
+
+; Start of Package body
+
+; Condition blocks
+; None
+
+; Options list
+; None
+
+; Install files
+
+
+  "\epoc32\release\armv5\urel\stiftestengine.dll"-"!:\Sys\Bin\stiftestengine.dll"
+  "\epoc32\release\armv5\urel\stftestenginesrv.exe"-"!:\Sys\Bin\stftestenginesrv.exe"
+  "\epoc32\release\armv5\urel\stiftestserver.dll"-"!:\Sys\Bin\stiftestserver.dll"
+  "\epoc32\release\armv5\urel\stiftestinterface.dll"-"!:\Sys\Bin\stiftestinterface.dll"
+  "\epoc32\release\armv5\urel\TestServerStarter.exe"-"!:\Sys\Bin\TestServerStarter.exe"
+  "\epoc32\release\armv5\urel\demomodule.dll"-"!:\Sys\Bin\demomodule.dll"
+  "\epoc32\release\armv5\urel\atslogger.dll"-"!:\Sys\Bin\atslogger.dll"
+  "\epoc32\release\armv5\urel\testscripter.dll"-"!:\Sys\Bin\testscripter.dll"
+  "\epoc32\release\armv5\urel\testcombiner.dll"-"!:\Sys\Bin\testcombiner.dll"
+  "\epoc32\release\armv5\urel\stiftfwif.dll"-"!:\Sys\Bin\stiftfwif.dll"
+  "\epoc32\release\armv5\urel\suevent.dll"-"!:\Sys\Bin\suevent.dll"
+  "\epoc32\release\armv5\urel\stfloggingserver.exe"-"!:\Sys\Bin\stfloggingserver.exe"
+  "\epoc32\release\armv5\urel\stf.exe"-"!:\Sys\Bin\stf.exe"
+  "\epoc32\release\armv5\urel\ConsoleUI.exe"-"!:\Sys\Bin\ConsoleUI.exe"
+  
+  "\epoc32\release\armv5\urel\stfeventsystemsrv.exe"-"!:\Sys\Bin\stfeventsystemsrv.exe"
+  "\epoc32\release\armv5\urel\stfeventsystemclient.dll"-"!:\Sys\Bin\stfeventsystemclient.dll"
+  "\epoc32\data\z\system\data\TestFramework.ini"-"c:\testframework\TestFramework.ini"
+
+; Embedded SIS 
+; None
+
+; End of Package body
+
+; PKG dependencies
+; None
+
+; PKG capabilities
+; None

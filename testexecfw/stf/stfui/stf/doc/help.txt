@@ -1,0 +1,48 @@
+Help document for STF console based execution UI.
+file version: 1.0
+release date: 2009-12-03
+============================================================
+
+
+
+Usage: stf [-option value] [--parameter value] [casename]
+
+where options include:
+
+-m <module name>
+-s <script file path> if use this parameter, system will use "testsripter" to call the script file.
+-i <engine initialization file path> Setting engine initialization file, if this option missed, STF will check the file under: "c:\testframework\testframework.ini"
+
+-c <module initialization file path> Setting module initialization file.
+
+--<configuration item> <value> 
+         Setting configuration parameter, this setting will override settings in initialization file.
+         The setting item could be:
+         TestReportMode             # Possible values are: 'Empty', 'Summary', 'Environment', 'TestCases' or 'FullReport'
+         CreateTestReport           # Possible values: YES or NO
+         TestReportFilePath
+         TestReportFileName
+         TestReportFormat           # Possible values: TXT, HTML or XML
+         TestReportOutput           # Possible values: FILE or RDEBUG
+         TestReportFileCreationMode # Possible values: OVERWRITE or APPEND    
+
+-p <item> <value> 
+         transfer name&value parameter into test module.
+
+-v       display version information
+-?/-h    display this help information.
+
+
+
+For example:
+1, stf -m demomodule 3
+        STF will execute 3rd case in "demomodule".
+        
+2, stf -m demomodule -i c:\test\test.ini -p input ETrue -p expected 0 case1
+        STF will execute "case1" under "demomodule", 
+        take initialization setting from "test.ini", 
+        transfer two paramters "input" and "expected" into test module.
+
+3, stf -s c:\test\mytest.cfg --TestReportMode Summary
+        STF will execute cases definied in "mytest.cfg" via testscripter, 
+        take initialization setting from "c:\testframework\testframework.ini", and take "TestReportMode" parameter as "summary"

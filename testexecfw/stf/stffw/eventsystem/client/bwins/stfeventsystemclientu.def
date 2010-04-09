@@ -1,0 +1,22 @@
+EXPORTS
+	??1CAsyncEventList@@UAE@XZ @ 1 NONAME ; CAsyncEventList::~CAsyncEventList(void)
+	?AddAsyncEventL@CAsyncEventList@@QAEXPAVCAsyncEventActive@@@Z @ 2 NONAME ; void CAsyncEventList::AddAsyncEventL(class CAsyncEventActive *)
+	?Close@REventSystem@@AAEXXZ @ 3 NONAME ; void REventSystem::Close(void)
+	?Connect@REventSystem@@AAEHXZ @ 4 NONAME ; int REventSystem::Connect(void)
+	?IsPending@CAsyncEventActive@@QAEHXZ @ 5 NONAME ; int CAsyncEventActive::IsPending(void)
+	?NewL@CAsyncEventActive@@SAPAV1@H@Z @ 6 NONAME ; class CAsyncEventActive * CAsyncEventActive::NewL(int)
+	?NewL@CAsyncEventList@@SAPAV1@XZ @ 7 NONAME ; class CAsyncEventList * CAsyncEventList::NewL(void)
+	?ReleaseEventL@REventSystem@@QAEXABVTDesC16@@H@Z @ 8 NONAME ; void REventSystem::ReleaseEventL(class TDesC16 const &, int)
+	?RemoveAsyncEventL@CAsyncEventList@@QAEXPAVCAsyncEventActive@@@Z @ 9 NONAME ; void CAsyncEventList::RemoveAsyncEventL(class CAsyncEventActive *)
+	?RequestEventL@REventSystem@@QAEXABVTDesC16@@H@Z @ 10 NONAME ; void REventSystem::RequestEventL(class TDesC16 const &, int)
+	?SetEventL@REventSystem@@QAEXABVTDesC16@@@Z @ 11 NONAME ; void REventSystem::SetEventL(class TDesC16 const &)
+	?SetEventL@REventSystem@@QAEXABVTDesC16@@PAVTRequestStatus@@@Z @ 12 NONAME ; void REventSystem::SetEventL(class TDesC16 const &, class TRequestStatus *)
+	?SetIndicationEventL@REventSystem@@QAEXABVTDesC16@@@Z @ 13 NONAME ; void REventSystem::SetIndicationEventL(class TDesC16 const &)
+	?SetIndicationEventL@REventSystem@@QAEXABVTDesC16@@PAVTRequestStatus@@@Z @ 14 NONAME ; void REventSystem::SetIndicationEventL(class TDesC16 const &, class TRequestStatus *)
+	?StartL@CAsyncEventActive@@QAEXPAVTRequestStatus@@VTThreadId@@ABVTDesC16@@PAVCAsyncEventList@@@Z @ 15 NONAME ; void CAsyncEventActive::StartL(class TRequestStatus *, class TThreadId, class TDesC16 const &, class CAsyncEventList *)
+	?UnsetEventL@REventSystem@@QAEXABVTDesC16@@@Z @ 16 NONAME ; void REventSystem::UnsetEventL(class TDesC16 const &)
+	?UnsetEventL@REventSystem@@QAEXABVTDesC16@@PAVTRequestStatus@@@Z @ 17 NONAME ; void REventSystem::UnsetEventL(class TDesC16 const &, class TRequestStatus *)
+	?Version@REventSystem@@ABE?AVTVersion@@XZ @ 18 NONAME ; class TVersion REventSystem::Version(void) const
+	?WaitEventL@REventSystem@@QAEXABVTDesC16@@H@Z @ 19 NONAME ; void REventSystem::WaitEventL(class TDesC16 const &, int)
+	?RemoveInRequestedState@REventSystem@@QAEHH@Z @ 20 NONAME ; int REventSystem::RemoveInRequestedState(int)
+
