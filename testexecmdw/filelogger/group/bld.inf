@@ -14,6 +14,8 @@
 // Description: 
 //
 
+#include "../te_RFileLogger/group/bld.inf"
+
 PRJ_EXPORTS
 ..\inc\RFileLogger.h				\epoc32\include\test\rfilelogger.h
 ..\inc\RFileLoggermacro.h			\epoc32\include\test\rfileloggermacro.h
